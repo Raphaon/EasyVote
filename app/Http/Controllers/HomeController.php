@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App;
+use Session;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -15,11 +17,7 @@ class HomeController extends Controller
         return view('welcome');
     }
 
-    public function change_language(CookieJar $cookieJar,$lang)
-    {
-        $minutes = 86400;
-        $cookieJar->queue(cookie('locale', $lang, 86400));
-        Session::put('locale', $lang);
+    public function change_language($lang){
         $l = App::getLocale();
         if($l === $lang){
             return redirect()->back();

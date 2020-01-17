@@ -13,18 +13,14 @@
 
 Route::get('/', [
 	'uses' => "HomeController@index",
-	'as' => 'user.inde',
+	'as' => 'user.index',
 ]);
 
 Auth::routes(['register'=>false]);  // Je n'ai pas besoin de la route register. La création d'un admin se fera par un autre admin dans le dashboard directement
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get(
-    '/lang/{lang}',
-    [
-        'before' => 'csrf',
-        'uses' => "HomeController@change_language",
-        'as' => 'lang'
-    ]
-);
+Route::get('/lang/{lang}',[
+	'uses' => "HomeController@change_language",
+	'as' => 'lang'
+]);

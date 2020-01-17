@@ -4,5 +4,5 @@
  ✔ intégrer le système d'authentification @done (20-01-17 11:02)
  ✔ séparer les fichiers de routes @done (20-01-17 11:02)
  ✔ gérer la redirection du user en fonction de la priorité @done (20-01-17 12:51)
- ☐ mettre en place l'internationalisation (FR | EN) (en cours)
+ ✔ mettre en place l'internationalisation (FR | EN) (en cours) @done (20-01-17 14:52)
  ☐ intégrer le template côté admin
