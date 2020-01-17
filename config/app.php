@@ -173,6 +173,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Added by @Onyx
+        Barryvdh\Debugbar\ServiceProvider::class,
+
     ],
 
     /*
@@ -224,6 +227,7 @@ return [
 
         // added by @Onyx
         'Constants' => App\Constants::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 
