@@ -19,6 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            // pour pouvoir gérer les # cas d'admin (gérant du système d'élection, superadmin, etc ...)
+            $table->enum('priority', [Constants::MANAGERPRIORITY, Constants::ADMINPRIORITY, Constants::SUPERADMINPRIORITY]);
             $table->rememberToken();
             $table->timestamps();
         });

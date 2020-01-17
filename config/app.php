@@ -222,6 +222,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        // added by @Onyx
+        'Constants' => App\Constants::class,
+
     ],
 
 ];
