@@ -10,6 +10,7 @@
 |
 */
 
-Route::get('/', function () {
-    echo 'Admin Side';
-});
+Route::get('/', [
+	'uses' => 'AdminController@index',
+	'as' => "admin.index",
+]);
