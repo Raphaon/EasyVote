@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,8 +30,17 @@ class LoginController extends Controller
      */
     public function redirectTo(){
 
+        // J'enregistre les logs avant de le déconnecter
+        $user = Auth::user();
+        App\Log::create([
+            'user_id' => $user->id,
+            'action' => 'login',
+            'action_time' => time(),
+        ]);
+        
         // User priority
-        $priority = Auth::user()->priority;
+        $priority = $user->priority;
+
 
         // Check user priority
         switch ($priority) {
@@ -61,5 +71,29 @@ class LoginController extends Controller
 
         // return ;
         return redirect($this->redirectTo());
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        // J'enregistre les logs avant de le déconnecter
+        $user = Auth::user();        
+
+        App\Log::create([
+            'user_id' => $user->id,
+            'action' => 'logout',
+            'action_time' => time(),
+        ]);
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect('/');
     }
 }

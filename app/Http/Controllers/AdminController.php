@@ -27,7 +27,7 @@ class AdminController extends Controller
 
     public function index(){
         $data = [
-            'title' => ""
+            'title' => "Dashboard | "
         ];
         return view('admin.index', $data);
     }

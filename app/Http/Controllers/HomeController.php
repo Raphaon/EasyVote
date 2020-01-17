@@ -19,6 +19,8 @@ class HomeController extends Controller
 
     public function change_language($lang){
         $l = App::getLocale();
+        Session::put('locale', $lang);
+
         if($l === $lang){
             return redirect()->back();
         }
