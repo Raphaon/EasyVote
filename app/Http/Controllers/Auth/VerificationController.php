@@ -25,7 +25,30 @@ class VerificationController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    // protected $redirectTo = '/admin';
+    /**
+     * Modification de la variable de redirection par défaut (protected $redirectTo = '/admin';) pour gérer les #tes priorités (voir app\Constants)
+     *
+     * @var string
+     */
+    public function redirectTo(){
+
+        // User priority
+        $priority = Auth::user()->priority; 
+
+        // Check user priority
+        switch ($priority) {
+            case 2:
+                    return '/admin';
+                break;
+            case 1:
+                    return '/dashboard';
+                break; 
+            default:
+                    return '/'; 
+                break;
+        }
+    }
 
     /**
      * Create a new controller instance.

@@ -26,6 +26,9 @@ class AdminController extends Controller
     }
 
     public function index(){
-        dd('wilkomen !');
+        $data = [
+            'title' => ""
+        ];
+        return view('admin.index', $data);
     }
 }

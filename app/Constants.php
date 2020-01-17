@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Constants extends Model
 {
-    const MANAGERPRIORITY = '1';
-	const ADMINPRIORITY = '2';
-	const SUPERADMINPRIORITY = '3';
+    const MANAGERPRIORITY = '1'; // priorité du gérant d'elecam
+	const ADMINPRIORITY = '2';  // priorité du développeur
 }

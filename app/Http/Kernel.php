@@ -42,9 +42,16 @@ class Kernel extends HttpKernel
             'bindings',
         ],
 
-        'web:auth' => [
+        'AdminElecam' => [
             'web',
             'auth',
+            \App\Http\Middleware\AdminElecam::class,
+        ],
+
+        'SuperAdmin' => [
+            'web',
+            'auth',
+            \App\Http\Middleware\SuperAdmin::class,
         ],
     ];
 

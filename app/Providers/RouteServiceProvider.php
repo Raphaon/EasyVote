@@ -39,7 +39,10 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        // Added ... mes routes personnalisées
         $this->mapAdminRoutes();
+
+        $this->mapDashboardRoutes();
     }
 
     /**
@@ -81,8 +84,23 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAdminRoutes()
     {
         Route::prefix('/admin')
-             ->middleware('web:auth') // définition d'un groupe personnalisé pour les routes de l'admin ... voir App\Http\Kernel
+             ->middleware('SuperAdmin') // définition d'un groupe de middlewares personnalisés pour l'admin ... voir App\Http\Kernel
              ->namespace($this->namespace)
-             ->group(base_path('routes/admin.php'));
+             ->group(base_path('routes/admin.php')); // fichier allant contenir toutes les routes du avec le prefixe 'admin'
+    }
+
+    /**
+     * Define the "admin" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapDashboardRoutes()
+    {
+        Route::prefix('/dashboard')
+             ->middleware('AdminElecam') // éfinition d'un groupe de middlewares personnalisés pour le gérant d'elecam ... voir App\Http\Kernel
+             ->namespace($this->namespace)
+             ->group(base_path('routes/dashboard.php')); // fichier allant contenir toutes les routes du avec le prefixe 'dashboard'
     }
 }
