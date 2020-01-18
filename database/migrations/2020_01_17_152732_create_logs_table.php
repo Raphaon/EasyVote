@@ -18,6 +18,7 @@ class CreateLogsTable extends Migration
             $table->integer("user_id");
             $table->string("action");
             $table->string("action_time");
+            $table->enum("level",[Constants::OTHERLOGSLEVEL,Constants::MANAGERLOGSLEVEL,Constants::ADMINLOGSLEVEL]);
             $table->timestamps();
         });
     }

@@ -21,6 +21,7 @@ class CreateCarteDeVotesTable extends Migration
             $table->integer('compteARebours');
             $table->enum('statut',['0','1']);
             $table->integer('personne_id');
+            $table->enum('statutCarte', [Constants::CARDNOTAVAILABLE, Constants::CARDAVAILABLE, Constants::CARDREMOVED]);
             $table->timestamps();
         });
     }

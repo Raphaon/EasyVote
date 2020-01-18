@@ -45,6 +45,16 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with($data);
         });
+
+        // Définition des variables que je veux rendre accessible UNIQUEMENT côté dashboard (gérant elecam)
+        View::composer('/dashboard', function ($view) {
+
+            $data = [
+                'admin' => Auth::user(),
+            ];
+
+            $view->with($data);
+        });
     }
 
     /**

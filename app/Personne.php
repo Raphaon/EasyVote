@@ -8,7 +8,7 @@ class Personne extends Model
 {
 
 	protected $fillable = [
-        "nom", "prenom", "dateNaiss", "lieuNaiss", "profession_occupation", "nomPere", "nomMere", "domicile_residence", "numCNI", "telephone", "photocni", "photoP", "commune_id", 'statut_elements',
+        "nom", "prenom", "dateNaiss", "lieuNaiss", "profession_occupation", "nomPere", "nomMere", "domicile_residence", "numCNI", "telephone", "photocni", "photoP", "commune_id", "statut_process", 'statut_elements',
    ];
 
     /**

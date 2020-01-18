@@ -69,7 +69,6 @@ class LoginController extends Controller
     public function authenticated(Request $request, $user){
         auth()->login($user);
 
-        // return ;
         return redirect($this->redirectTo());
     }
 

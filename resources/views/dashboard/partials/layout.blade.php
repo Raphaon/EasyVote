@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title> {{ $title }}EasyVote Dev</title>
+    <title> {{ $title }}EasyVote</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -63,30 +63,30 @@
     </style>
 </head>
 
-<body>
+<body class="bg-dark">
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="menu-item-has-children dropdown">
+                    <li class="menu-item-has-children dropdown mb-3">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion des inscriptions</a>
-                        <ul class="sub-menu children dropdown-menu">
+                        <ul class="sub-menu children dropdown-menu" style="padding: 0 !important;">
                             <li><a href="{{ route('dashboard.inscriptions.waiting') }}">Inscriptions non traitées</a></li>
-                            <li><a href="ui-tabs.html">Inscriptions rejetées </a></li>
-                            <li></i><a href="ui-cards.html">Inscriptions validées</a></li>
+                            <li><a href="{{ route('dashboard.inscriptions.rejected') }}">Inscriptions rejetées </a></li>
+                            <li></i><a href="{{ route('dashboard.inscriptions.valide') }}">Inscriptions validées</a></li>
                         </ul>
                     </li>
-                    <li><a href="ui-cards.html">Cartes d'électeurs disponibles</a></li>
-                    <li class="menu-item-has-children dropdown">
+                    <li class="mb-3"><a href="ui-cards.html">Cartes d'électeurs disponibles</a></li>
+                    <li class="menu-item-has-children dropdown mb-3">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion des administrateurs</a>
-                        <ul class="sub-menu children dropdown-menu">
+                        <ul class="sub-menu children dropdown-menu" style="padding: 0 !important;">
                             <li><a href="ui-badges.html">Ajouter un administrateur</a></li>
                             <li><a href="ui-buttons.html">Tous les administrateurs</a></li>
                         </ul>
                     </li>
-                    <li><a href="ui-cards.html">Logs du système</a></li>
-                    <li><a href="ui-cards.html">Mon profil</a></li>
+                    <li class="mb-3"><a href="{{ route('dashboard.logs') }}">Logs du système</a></li>
+                    <li class="mb-3"><a href="{{ route('dashboard.profile') }}">Mon profil</a></li>
                     {{-- <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tables</a>
                         <ul class="sub-menu children dropdown-menu">
@@ -244,8 +244,8 @@
                             <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
 
                             <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            	<i class="fa fa-power -off"></i>Logout
-                            	<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                <i class="fa fa-power -off"></i>Logout
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
                             </a>
