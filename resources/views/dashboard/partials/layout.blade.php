@@ -513,13 +513,12 @@
             data: fa.serialize(),
             dataType: 'json',
             success: function(response) {
-                console.log(response);
-                // if(response.success == true) {
-                //     fa.find('#rep2').html('<span class="text-'+response.status+'">'+response.mesg+'</span>');
+                if(response.success == true) {
+                    fa.find('#rep2').html('<span class="text-'+response.status+'">'+response.mesg+'</span>');
 
-                // } else {
-                //     fa.find('#rep2').html('<span class="text-'+response.status+'">'+response.mesg+'</span>');
-                // }
+                } else {
+                    fa.find('#rep2').html('<span class="text-'+response.status+'">'+response.mesg+'</span>');
+                }
             }
         });
 
@@ -542,6 +541,11 @@
         }else{
             trObj.find("#oper").html('<span class="text-info">check if the documents are correct</span>');
         }
+    });
+
+    $(".showImgModal").on('click', function(){
+        var image = $(this).attr("data-image");
+        $("#showImg").attr('src', image);
     });
     </script>
 </body>

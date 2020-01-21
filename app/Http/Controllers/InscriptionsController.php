@@ -116,7 +116,24 @@ class InscriptionsController extends Controller
     /**
      * Mettre à jour le statut des différents éléments du dossier d'un inscrit
      */
-    public function updateStatutElements(){
-        echo json_encode("updateStatutElements");
+    public function updateStatutElements(Request $request){
+        $this->validate($request, [
+            'name' => "required",
+            'prenom' => "required",
+            'dateNaiss' => "required",
+            'lieuNaiss' => "required",
+            'profession_occupation' => "required",
+            'nomPere' => "required",
+            'nomMere' => "required",
+            'domicile_residence' => "required",
+            'numCNI' => "required|numeric",
+            'id_user' => "required|numeric",
+        ]);
+
+        $personne = Personne::find($request->id_user);
+
+        echo json_encode($personne->update([
+                    'statut_elements' => serialize($request->post()),
+                ]));
     }
 }

@@ -39,13 +39,13 @@
                                         </div>
                                     <td>
                                         <form action="{{ route('dashboard.inscription.update_statut_process') }}" method="POST" class="monForm">
-                                            <input type="hidden" name="id" value="{{ $inscription->id }}" required>
+                                            <input required type="hidden" name="id" value="{{ $inscription->id }}">
                                             <select name="statut" class="status custom-select col-md-5" required>
                                                 <option value="">Choisir l'état du dossier</option>
                                                 <option value="1">Rejeté</option>
                                                 <option value="2">Validé</option>
                                             </select>
-                                            <input type="hidden" name="action" value="accound">
+                                            <input required type="hidden" name="action" value="accound">
                                             <input type="submit" value="confirm" class="btn btn-danger btn-sm remo" style="display:none;">
                                             <span id="oper"></span>
                                         </form>
@@ -60,14 +60,13 @@
                                                         <div class="profile-user-info profile-user-info-striped">
                                                             <div class="profile-info-row">
                                                                 <div class="profile-info-name">Nom</div>
-
                                                                 <div class="profile-info-value">
                                                                     <span>{{ $inscription->nom }}</span>
                                                                 </div>
                                                                 <div class="checkbox-radios">
                                                                     <div class="form-check form-check-inline">
                                                                         <label class="form-check-label">
-                                                                            <input class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"name") }} name="name" value="">accept
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"name") }} name="name" value="{{ $inscription->nom }}">accept
                                                                             <span class="form-check-sign">
                                                                                 <span class="check"></span>
                                                                             </span>
@@ -75,7 +74,151 @@
                                                                     </div>
                                                                     <div class="form-check form-check-inline">
                                                                         <label class="form-check-label">
-                                                                            <input class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"name", "_refuse") }} name="name" value="mobile_refuse">refuse
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"name", "_refuse") }} name="name" value="mobile_refuse">refuse
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-info-row">
+                                                                <div class="profile-info-name">Prenom</div>
+                                                                <div class="profile-info-value">
+                                                                    <span>{{ $inscription->prenom }}</span>
+                                                                </div>
+                                                                <div class="checkbox-radios">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"prenom") }} name="prenom" value="{{ $inscription->prenom }}">accept
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"prenom", "_refuse") }} name="prenom" value="mobile_refuse">refuse
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-info-row">
+                                                                <div class="profile-info-name">Date de Naissance</div>
+                                                                <div class="profile-info-value">
+                                                                    <span>{{ $inscription->dateNaiss }}</span>
+                                                                </div>
+                                                                <div class="checkbox-radios">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"dateNaiss") }} name="dateNaiss" value="{{ $inscription->dateNaiss }}">accept
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"dateNaiss", "_refuse") }} name="dateNaiss" value="mobile_refuse">refuse
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-info-row">
+                                                                <div class="profile-info-name">Lieu de Naissance</div>
+                                                                <div class="profile-info-value">
+                                                                    <span>{{ $inscription->lieuNaiss }}</span>
+                                                                </div>
+                                                                <div class="checkbox-radios">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"lieuNaiss") }} name="lieuNaiss" value="{{ $inscription->lieuNaiss }}">accept
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"lieuNaiss", "_refuse") }} name="lieuNaiss" value="mobile_refuse">refuse
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-info-row">
+                                                                <div class="profile-info-name">Occupation</div>
+                                                                <div class="profile-info-value">
+                                                                    <span>{{ $inscription->profession_occupation }}</span>
+                                                                </div>
+                                                                <div class="checkbox-radios">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"profession_occupation") }} name="profession_occupation" value="{{ $inscription->profession_occupation }}">accept
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"profession_occupation", "_refuse") }} name="profession_occupation" value="mobile_refuse">refuse
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-info-row">
+                                                                <div class="profile-info-name">Nom du pére</div>
+                                                                <div class="profile-info-value">
+                                                                    <span>{{ $inscription->nomPere }}</span>
+                                                                </div>
+                                                                <div class="checkbox-radios">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"nomPere") }} name="nomPere" value="{{ $inscription->nomPere }}">accept
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"nomPere", "_refuse") }} name="nomPere" value="mobile_refuse">refuse
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-info-row">
+                                                                <div class="profile-info-name">Nom de la mère</div>
+                                                                <div class="profile-info-value">
+                                                                    <span>{{ $inscription->nomMere }}</span>
+                                                                </div>
+                                                                <div class="checkbox-radios">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"nomMere") }} name="nomMere" value="{{ $inscription->nomMere }}">accept
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"nomMere", "_refuse") }} name="nomMere" value="mobile_refuse">refuse
                                                                             <span class="form-check-sign">
                                                                                 <span class="check"></span>
                                                                             </span>
@@ -88,15 +231,15 @@
                                                     <div class="col-xs-12 col-sm-5">
                                                         <div class="profile-user-info profile-user-info-striped">
                                                             <div class="profile-info-row">
-                                                                <div class="profile-info-name">Phone</div>
+                                                                <div class="profile-info-name">Numéro CNI</div>
 
                                                                 <div class="profile-info-value">
-                                                                    <span>237 699508197</span>
+                                                                    <span>{{ $inscription->numCNI }}</span>
                                                                 </div>
                                                                 <div class="checkbox-radios">
                                                                     <div class="form-check form-check-inline">
                                                                         <label class="form-check-label">
-                                                                            <input class="form-check-input" type="radio" name="mobile" value="">accept
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"numCNI") }} name="numCNI" value="{{ $inscription->numCNI }}">accept
                                                                             <span class="form-check-sign">
                                                                                 <span class="check"></span>
                                                                             </span>
@@ -104,21 +247,141 @@
                                                                     </div>
                                                                     <div class="form-check form-check-inline">
                                                                         <label class="form-check-label">
-                                                                            <input class="form-check-input" type="radio" name="mobile" value="mobile_refuse">refuse
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"numCNI", "_refuse") }} name="numCNI" value="mobile_refuse">refuse
                                                                             <span class="form-check-sign">
                                                                                 <span class="check"></span>
                                                                             </span>
                                                                         </label>
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-info-row">
+                                                                <div class="profile-info-name">Résidence</div>
+                                                                <div class="profile-info-value">
+                                                                    <span>{{ $inscription->domicile_residence }}</span>
+                                                                </div>
+                                                                <div class="checkbox-radios">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"domicile_residence") }} name="domicile_residence" value="{{ $inscription->domicile_residence }}">accept
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"domicile_residence", "_refuse") }} name="domicile_residence" value="mobile_refuse">refuse
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-info-row">
+                                                                <div class="profile-info-name">Telephone</div>
 
+                                                                <div class="profile-info-value">
+                                                                    <span>{{ $inscription->telephone }}</span>
+                                                                </div>
+                                                                <div class="checkbox-radios">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"telephone") }} name="telephone" value="{{ $inscription->telephone }}">accept
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"telephone", "_refuse") }} name="telephone" value="mobile_refuse">refuse
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-info-row">
+                                                                <div class="profile-info-name">Photo Personne</div>
+                                                                <div class="profile-info-value text-center" style="vertical-align: middle;">
+                                                                    <button type="button" data-toggle="modal" data-target="#staticModal" data-image="{{ asset($inscription->cniPhoto) }}" class="btn btn-link showImgModal">Voir l'image</button>
+                                                                </div>
+                                                                <div class="checkbox-radios">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"photocni") }} name="photocni" value="{{ $inscription->cniPhoto }}">accept
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"photocni", "_refuse") }} name="photocni" value="mobile_refuse">refuse
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-info-row">
+                                                                <div class="profile-info-name">Photo Personne</div>
+                                                                <div class="profile-info-value text-center" style="vertical-align: middle;">
+                                                                    <button type="button" data-toggle="modal" data-target="#staticModal" data-image="{{ asset($inscription->imgPersonne) }}" class="btn btn-link showImgModal">Voir l'image</button>
+                                                                </div>
+                                                                <div class="checkbox-radios">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"photoP") }} name="photoP" value="{{ $inscription->imgPersonne }}">accept
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"photoP", "_refuse") }} name="photoP" value="mobile_refuse">refuse
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-info-row">
+                                                                <div class="profile-info-name">Commune</div>
+
+                                                                <div class="profile-info-value">
+                                                                    <span>{{ $inscription->commune->nomCom }}</span>
+                                                                </div>
+                                                                <div class="checkbox-radios">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"commune_id") }} name="commune_id" value="{{ $inscription->commune->id }}">accept
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <label class="form-check-label">
+                                                                            <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"commune_id", "_refuse") }} name="commune_id" value="mobile_refuse">refuse
+                                                                            <span class="form-check-sign">
+                                                                                <span class="check"></span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-1">
                                                         <div class="row">
-                                                            <input type="hidden" name="id_user" value="{{ $inscription->id }}">
-                                                            <input type="hidden" name="action" value="valid_doc">
+                                                            <input required type="hidden" name="id_user" value="{{ $inscription->id }}">
                                                             <span id="rep2" class="col-sm-1"></span>
                                                             <button class="pull-right btn btn-sm btn-primary btn-white btn-round" type="submit" name="send">
                                                                 save
@@ -304,5 +567,19 @@
         position: relative;
         z-index: 100;
     }
-  </style>
+    </style>
+    <div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img src="" alt="" id="showImg">
+               </div>
+            </div>
+        </div>
+    </div>
 @stop

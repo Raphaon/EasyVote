@@ -32,11 +32,11 @@ class Personne extends Model
         return $this->belongsTo("App\BureauDeVote");
     }
 
-    public function getPhotocniAttribute(){
-        return asset('public/uploads/cni/'.$this->photocni);
+    public function getcniPhotoAttribute(){
+        return asset("uploads/cni/".$this->photocni);
     }
 
-    public function getPhotoPAttribute(){
-        return asset('public/uploads/personnes/'.$this->photoP);
+    public function getimgPersonneAttribute(){
+        return asset("uploads/personnes/".$this->photoP);
     }
 }
