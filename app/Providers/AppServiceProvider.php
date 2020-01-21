@@ -4,6 +4,8 @@ namespace App\Providers;
 
 
 use App;
+use Auth;
+use App\Constants;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -33,27 +35,31 @@ class AppServiceProvider extends ServiceProvider
                 'r_lang' => $r_lang,
             ];
 
-            $view->with($data);
+            View::share($data);
         });
 
         // Définition des variables que je veux rendre accessible UNIQUEMENT côté admin
-        View::composer('/admin', function ($view) {
+        View::composer('admin.*', function ($view) {
 
             $data = [
                 'admin' => Auth::user(),
             ];
 
-            $view->with($data);
+            View::share($data);
         });
 
         // Définition des variables que je veux rendre accessible UNIQUEMENT côté dashboard (gérant elecam)
-        View::composer('/dashboard', function ($view) {
+        View::composer('dashboard.*', function ($view) {
 
+            
             $data = [
                 'admin' => Auth::user(),
+                'nbr_insc_waiting' => count(App\Personne::where("statut_process",Constants::SUBMITTEDINSCRIPTION)->get()),
+                'nbr_insc_rejected' => count(App\Personne::where("statut_process",Constants::REJECTEDINSCRIPTION)->get()),
+                // 'nbr_insc_valide' => count(App\Personne::where("statut_process",Constants::VALIDEINSCRIPTION)->get()),
             ];
 
-            $view->with($data);
+            View::share($data);
         });
     }
 

@@ -28,10 +28,12 @@ class CreatePersonnesTable extends Migration
             $table->string('photocni');
             $table->string('photoP');
             $table->integer('commune_id');
+            $table->integer('bureau_de_vote_id');
             $table->enum('statut_process', [Constants::SUBMITTEDINSCRIPTION, Constants::REJECTEDINSCRIPTION, Constants::VALIDEINSCRIPTION]); //gestion du processus de son inscription
 
             // tableau sérialisé qui va contenir le statut(accepté|refué) de chque champ
             $table->text('statut_elements')->nullable();
+            $table->string('date_inscription');
             $table->timestamps();
         });
     }

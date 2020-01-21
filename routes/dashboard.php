@@ -39,3 +39,12 @@ Route::group(['prefix'=>'inscriptions'], function (){
 		'as' => "dashboard.inscriptions.valide"
 	]);
 });
+
+Route::post('maj-statut-process', [
+	'uses' => "InscriptionsController@updateStatutProcess",
+	'as' => "dashboard.inscription.update_statut_process",
+]);
+Route::post('maj-statut-elements', [
+	'uses' => "InscriptionsController@updateStatutElements",
+	'as' => "dashboard.inscription.update_statut_elements",
+]);

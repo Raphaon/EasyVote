@@ -69,7 +69,7 @@
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="menu-item-has-children dropdown">
+                    {{-- <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion des inscriptions</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><a href="{{ route('dashboard.inscriptions.waiting') }}">Inscriptions non traitées</a></li>
@@ -77,12 +77,21 @@
                             <li></i><a href="ui-cards.html">Inscriptions validées</a></li>
                         </ul>
                     </li>
-                    <li><a href="ui-cards.html">Cartes d'électeurs disponibles</a></li>
+                    <li><a href="ui-cards.html">Cartes d'électeurs disponibles</a></li> --}}
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion des administrateurs</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><a href="ui-badges.html">Ajouter un administrateur</a></li>
                             <li><a href="ui-buttons.html">Tous les administrateurs</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Paramètres</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><a href="ui-badges.html">Régions</a></li>
+                            <li><a href="ui-buttons.html">Départements</a></li>
+                            <li><a href="ui-buttons.html">Communes</a></li>
+                            <li><a href="ui-buttons.html">Bureaux de votes</a></li>
                         </ul>
                     </li>
                     <li><a href="ui-cards.html">Logs du système</a></li>

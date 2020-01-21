@@ -24,8 +24,8 @@ class Constants extends Model
      * Constantes pour le statut du dossier d'un inscrit
      */
     const SUBMITTEDINSCRIPTION = '0'; //valeur par défaut
-    const REJECTEDINSCRIPTION = '1';
-    const VALIDEINSCRIPTION = '2';
+    const REJECTEDINSCRIPTION = '1'; //dossier rejeté
+    const VALIDEINSCRIPTION = '2'; //dossier validé
 
     /**
      * Constantes pour le statut du retrait de la carte d'électeur

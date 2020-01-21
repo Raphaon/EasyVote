@@ -21,4 +21,8 @@ class BureauDeVote extends Model
     public function elections(){
     	return $this->hasMany("App\Election");
     }
+
+    public function personnes(){
+        return $this->hasMany("App\Personne");
+    }
 }

@@ -23,7 +23,7 @@ class InscriptionsController extends Controller
     public function waiting(){
     	$data = [
     		'title' => "Inscriptions non traitées - ELECAM",
-    		'inscriptions' => Personne::where("statut_process",Constants::SUBMITTEDINSCRIPTION)->get(),
+    		'inscriptions_w' => Personne::where("statut_process",Constants::SUBMITTEDINSCRIPTION)->get(),
     	];
 
     	return view("dashboard.inscriptions.waiting", $data);
@@ -35,7 +35,7 @@ class InscriptionsController extends Controller
     public function rejected(){
     	$data = [
     		'title' => "Inscriptions rejetées - ELECAM",
-    		'inscriptions' => Personne::where("statut_process",Constants::REJECTEDINSCRIPTION)->get(),
+    		'inscriptions_r' => Personne::where("statut_process",Constants::REJECTEDINSCRIPTION)->get(),
     	];
 
     	return view("dashboard.inscriptions.rejected", $data);
@@ -47,9 +47,23 @@ class InscriptionsController extends Controller
     public function valide(){
     	$data = [
     		'title' => "Inscriptions valides - ELECAM",
-    		'inscriptions' => Personne::where("statut_process",Constants::VALIDEINSCRIPTION)->get(),
+    		'inscriptions_v' => Personne::where("statut_process",Constants::VALIDEINSCRIPTION)->get(),
     	];
 
     	return view("dashboard.inscriptions.valide", $data);
+    }
+
+    /**
+     * Mettre à jour le statut du dossier d'un inscrit
+     */
+    public function updateStatutProcess(){
+        echo json_encode("updateStatutProcess");
+    }
+
+    /**
+     * Mettre à jour le statut des différents éléments du dossier d'un inscrit
+     */
+    public function updateStatutElements(){
+        echo json_encode("updateStatutElements");
     }
 }
