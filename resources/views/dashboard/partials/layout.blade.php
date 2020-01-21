@@ -484,11 +484,13 @@
             dataType: 'json',
             success: function(response) {
                 if(response.status){
-                    $('#oper').html('<small class=" btn btn-'+response.status+'">'+response.mesg+'</small>');
-                    $('#oper').fadeIn().delay(2000).fadeOut()
+                    $('#oper').html('<small class=" text-'+response.status+'">'+response.mesg+'</small>');
+                    $('#oper').fadeIn().delay(2000).fadeOut();
+                    var trObj = $(this).closest("tr");
+                    trObj.find(".remo").css('display', 'none');
                 }else{
                     $('#alert').attr('class', 'alert '+response.type);
-                    $('#alert').html(response.msg);
+                    $('#alert').html(response.mesg);
                     fa[0].reset();
                 }
             }
@@ -511,15 +513,35 @@
             data: fa.serialize(),
             dataType: 'json',
             success: function(response) {
-                if(response.success == true) {
-                    fa.find('#rep2').html('<span class="btn btn-'+response.status+'">'+response.mesg+'</span>');
+                console.log(response);
+                // if(response.success == true) {
+                //     fa.find('#rep2').html('<span class="text-'+response.status+'">'+response.mesg+'</span>');
 
-                } else {
-                    fa.find('#rep2').html('<span class="btn btn-'+response.status+'">'+response.mesg+'</span>');
-                }
+                // } else {
+                //     fa.find('#rep2').html('<span class="text-'+response.status+'">'+response.mesg+'</span>');
+                // }
             }
         });
 
+    });
+
+    $('.status').on('change', function () {
+        var trObj = $(this).closest("tr");
+        var ni=0;
+        var trid=$(this).closest("tr").attr('id');
+        var trcl=$('.'+trid)
+        trcl.find('form input[type="radio"]').each(function(){
+           if ($(this).prop('checked')==true){ 
+                ni++;  
+            } 
+        });        
+
+        if(ni>0){
+            trObj.find(".remo").css('display', '');
+            trObj.find("#oper").html('')
+        }else{
+            trObj.find("#oper").html('<span class="text-info">check if the documents are correct</span>');
+        }
     });
     </script>
 </body>

@@ -36,6 +36,7 @@ class LoginController extends Controller
             'user_id' => $user->id,
             'action' => 'login',
             'action_time' => time(),
+            'level' => $user->priority,
         ]);
         
         // User priority
@@ -87,6 +88,7 @@ class LoginController extends Controller
             'user_id' => $user->id,
             'action' => 'logout',
             'action_time' => time(),
+            'level' => $user->priority,
         ]);
 
         $this->guard()->logout();

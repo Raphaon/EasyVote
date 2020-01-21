@@ -47,14 +47,14 @@
 					                    </div>
                                     <td>
                                     	<form action="{{ route('dashboard.inscription.update_statut_process') }}" method="POST" class="monForm">
-                                    		<input type="hidden" name="id" value="{{ $inscription->id }}">
-                                			<select name="satut" class="status custom-select col-md-5">
+                                    		<input type="hidden" name="id" value="{{ $inscription->id }}" required>
+                                			<select name="statut" class="status custom-select col-md-5" required>
                                     			<option value="">Choisir l'état du dossier</option>
                                     			<option value="1">Rejeté</option>
                                     			<option value="2">Validé</option>
                                     		</select>
                                     		<input type="hidden" name="action" value="accound">
-                                    		<input type="submit" value="confirm" class="btn btn-danger btn-sm remo" style="display:none">
+                                    		<input type="submit" value="confirm" class="btn btn-danger btn-sm remo" style="display:none;">
                                     		<span id="oper"></span>
                                     	</form>
                                     </td>
@@ -75,7 +75,7 @@
 				                                				<div class="checkbox-radios">
 				                                					<div class="form-check form-check-inline">
 				                                						<label class="form-check-label">
-				                                							<input class="form-check-input" type="radio" name="name" value="">accept
+				                                							<input class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"name") }} name="name" value="">accept
 				                                							<span class="form-check-sign">
 				                                								<span class="check"></span>
 				                                							</span>
@@ -83,7 +83,7 @@
 				                                					</div>
 				                                					<div class="form-check form-check-inline">
 				                                						<label class="form-check-label">
-				                                							<input class="form-check-input" type="radio" name="name" value="mobile_refuse">refuse
+				                                							<input class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"name", "_refuse") }} name="name" value="mobile_refuse">refuse
 				                                							<span class="form-check-sign">
 				                                								<span class="check"></span>
 				                                							</span>
