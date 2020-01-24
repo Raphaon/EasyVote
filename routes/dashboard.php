@@ -34,7 +34,22 @@ Route::group(['prefix'=>'inscriptions'], function (){
 		'uses' => "InscriptionsController@rejected",
 		'as' => "dashboard.inscriptions.rejected"
 	]);
+
 	Route::get('inscriptions-valides', [
+		'uses' => "InscriptionsController@valide",
+		'as' => "dashboard.inscriptions.valide"
+	]);
+
+	// On ajoute une route POST pour chacun afin d'envoyer les données pour les tri et filtre
+	Route::post('inscriptions-non-traitées', [
+		'uses' => "InscriptionsController@waiting",
+		'as' => "dashboard.inscriptions.waiting"
+	]);
+	Route::post('inscriptions-rejetées', [
+		'uses' => "InscriptionsController@rejected",
+		'as' => "dashboard.inscriptions.rejected"
+	]);
+	Route::post('inscriptions-valides', [
 		'uses' => "InscriptionsController@valide",
 		'as' => "dashboard.inscriptions.valide"
 	]);
@@ -48,3 +63,4 @@ Route::post('maj-statut-elements', [
 	'uses' => "InscriptionsController@updateStatutElements",
 	'as' => "dashboard.inscription.update_statut_elements",
 ]);
+Route::post('load_values', "AjaxController@loadValues"); // chager les régions & departements & communes & bureaux de vote en Ajax

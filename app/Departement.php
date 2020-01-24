@@ -26,4 +26,12 @@ class Departement extends Model
     public function communes(){
         return $this->hasMany("App\Commune");
     }
+
+    /**
+     * Departement .. Communes .. Personnes
+     * Compris ?? Je récupère directement toutes les personnes d'un département. Voir la doc pour plus d'explications
+     */
+    public function personnes(){
+        return $this->hasManyThrough("App\Personne", "App\Commune");
+    }
 }

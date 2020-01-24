@@ -25,7 +25,8 @@ class CreatePersonnesTable extends Migration
             $table->string('domicile_residence');
             $table->integer('numCNI');
             $table->string('telephone');
-            $table->string('photocni');
+            $table->string('photocniRecto');
+            $table->string('photocniVerso');
             $table->string('photoP');
             $table->integer('commune_id');
             $table->integer('bureau_de_vote_id');

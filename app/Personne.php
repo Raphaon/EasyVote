@@ -8,7 +8,7 @@ class Personne extends Model
 {
 
 	protected $fillable = [
-        "nom", "prenom", "dateNaiss", "lieuNaiss", "profession_occupation", "nomPere", "nomMere", "domicile_residence", "numCNI", "telephone", "photocni", "photoP", "commune_id", "bureau_de_vote_id", "statut_process", 'statut_elements', 'date_inscription',
+        "nom", "prenom", "dateNaiss", "lieuNaiss", "profession_occupation", "nomPere", "nomMere", "domicile_residence", "numCNI", "telephone", "photocniRecto", "photocniVerso", "photoP", "commune_id", "bureau_de_vote_id", "statut_process", 'statut_elements', 'date_inscription',
    ];
 
     /**
@@ -33,7 +33,11 @@ class Personne extends Model
     }
 
     public function getcniPhotoAttribute(){
-        return asset("uploads/cni/".$this->photocni);
+        return asset("uploads/cni/".$this->photocniRecto);
+    }
+
+    public function getcniPhotoVersoAttribute(){
+        return asset("uploads/cni/".$this->photocniVerso);
     }
 
     public function getimgPersonneAttribute(){

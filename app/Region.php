@@ -22,4 +22,12 @@ class Region extends Model
     public function departements(){
         return $this->hasMany("App\Departement");
     }
+
+    /**
+     * Region .. Departements .. Communes
+     * Compris ?? Je récupère directement toutes les communes d'une région. Voir la doc pour plus d'explications
+     */
+    public function communes(){
+        return $this->hasManyThrough("App\Commune", 'App\Departement');
+    }
 }

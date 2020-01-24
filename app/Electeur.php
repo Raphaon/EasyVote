@@ -8,7 +8,7 @@ class Electeur extends Model
 {
 
 	protected $fillable = [
-		'personne_id',
+		'personne_id', 'matricule',
 	];
 
 

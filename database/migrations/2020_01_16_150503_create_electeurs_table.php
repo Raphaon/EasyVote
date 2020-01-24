@@ -16,6 +16,7 @@ class CreateElecteursTable extends Migration
         Schema::create('electeurs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('personne_id');
+            $table->string('matricule');
             $table->timestamps();
         });
     }

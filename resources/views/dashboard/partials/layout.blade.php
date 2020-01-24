@@ -6,6 +6,7 @@
     <title> {{ $title }}EasyVote</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="dashboard_base_url" content="{{ route('dashboard.index') }}">
 
     <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
     <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
@@ -25,6 +26,7 @@
 
     <link href="{{ asset('manager/css/weather-icons.css') }}" rel="stylesheet" />
     <link href="{{ asset('manager/css/fullcalendar.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('manager/css/lib/chosen/chosen.min.css') }}">
 
    <style>
     #weatherWidget .currentDesc {
@@ -100,8 +102,8 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="{{ asset('manager/images/logo.png') }}" alt="Logo"></a>
-                    <a class="navbar-brand hidden" href="./"><img src="{{ asset('manager/images/logo2.png') }}" alt="Logo"></a>
+                    <a class="navbar-brand" href="{{ route('dashboard.index') }}"><img src="{{ asset('manager/images/logo.png') }}" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href="{{ route('dashboard.index') }}"><img src="{{ asset('manager/images/logo2.png') }}" alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
@@ -261,7 +263,18 @@
     <script src="{{ asset('manager/js/lib/data-table/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('manager/js/lib/data-table/buttons.print.min.js') }}"></script>
     <script src="{{ asset('manager/js/lib/data-table/buttons.colVis.min.js') }}"></script>
-    {{-- <script src="{{ asset('manager/js/init/datatables-init.js') }}"></script> --}}
+    <script src="{{ asset('manager/js/init/datatables-init.js') }}"></script>
+    <script src="{{ asset('manager/js/lib/chosen/chosen.jquery.min.js') }}"></script>
+
+    <script>
+        jQuery(document).ready(function() {
+            jQuery(".standardSelect").chosen({
+                disable_search_threshold: 10,
+                no_results_text: "Oops, nothing found!",
+                width: "100%"
+            });
+        });
+    </script>
 
 
     <script type="text/javascript">
@@ -273,195 +286,195 @@
 
     <!--Local Stuff-->
     <script>
-        // jQuery(document).ready(function($) {
-        //     "use strict";
+        jQuery(document).ready(function($) {
+            "use strict";
 
-        //     // Pie chart flotPie1
-        //     var piedata = [
-        //         { label: "Desktop visits", data: [[1,32]], color: '#5c6bc0'},
-        //         { label: "Tab visits", data: [[1,33]], color: '#ef5350'},
-        //         { label: "Mobile visits", data: [[1,35]], color: '#66bb6a'}
-        //     ];
+            // Pie chart flotPie1
+            var piedata = [
+                { label: "Desktop visits", data: [[1,32]], color: '#5c6bc0'},
+                { label: "Tab visits", data: [[1,33]], color: '#ef5350'},
+                { label: "Mobile visits", data: [[1,35]], color: '#66bb6a'}
+            ];
 
-        //     $.plot('#flotPie1', piedata, {
-        //         series: {
-        //             pie: {
-        //                 show: true,
-        //                 radius: 1,
-        //                 innerRadius: 0.65,
-        //                 label: {
-        //                     show: true,
-        //                     radius: 2/3,
-        //                     threshold: 1
-        //                 },
-        //                 stroke: {
-        //                     width: 0
-        //                 }
-        //             }
-        //         },
-        //         grid: {
-        //             hoverable: true,
-        //             clickable: true
-        //         }
-        //     });
-        //     // Pie chart flotPie1  End
-        //     // cellPaiChart
-        //     var cellPaiChart = [
-        //         { label: "Direct Sell", data: [[1,65]], color: '#5b83de'},
-        //         { label: "Channel Sell", data: [[1,35]], color: '#00bfa5'}
-        //     ];
-        //     $.plot('#cellPaiChart', cellPaiChart, {
-        //         series: {
-        //             pie: {
-        //                 show: true,
-        //                 stroke: {
-        //                     width: 0
-        //                 }
-        //             }
-        //         },
-        //         legend: {
-        //             show: false
-        //         },grid: {
-        //             hoverable: true,
-        //             clickable: true
-        //         }
+            $.plot('#flotPie1', piedata, {
+                series: {
+                    pie: {
+                        show: true,
+                        radius: 1,
+                        innerRadius: 0.65,
+                        label: {
+                            show: true,
+                            radius: 2/3,
+                            threshold: 1
+                        },
+                        stroke: {
+                            width: 0
+                        }
+                    }
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true
+                }
+            });
+            // Pie chart flotPie1  End
+            // cellPaiChart
+            var cellPaiChart = [
+                { label: "Direct Sell", data: [[1,65]], color: '#5b83de'},
+                { label: "Channel Sell", data: [[1,35]], color: '#00bfa5'}
+            ];
+            $.plot('#cellPaiChart', cellPaiChart, {
+                series: {
+                    pie: {
+                        show: true,
+                        stroke: {
+                            width: 0
+                        }
+                    }
+                },
+                legend: {
+                    show: false
+                },grid: {
+                    hoverable: true,
+                    clickable: true
+                }
 
-        //     });
-        //     // cellPaiChart End
-        //     // Line Chart  #flotLine5
-        //     var newCust = [[0, 3], [1, 5], [2,4], [3, 7], [4, 9], [5, 3], [6, 6], [7, 4], [8, 10]];
+            });
+            // cellPaiChart End
+            // Line Chart  #flotLine5
+            var newCust = [[0, 3], [1, 5], [2,4], [3, 7], [4, 9], [5, 3], [6, 6], [7, 4], [8, 10]];
 
-        //     var plot = $.plot($('#flotLine5'),[{
-        //         data: newCust,
-        //         label: 'New Data Flow',
-        //         color: '#fff'
-        //     }],
-        //     {
-        //         series: {
-        //             lines: {
-        //                 show: true,
-        //                 lineColor: '#fff',
-        //                 lineWidth: 2
-        //             },
-        //             points: {
-        //                 show: true,
-        //                 fill: true,
-        //                 fillColor: "#ffffff",
-        //                 symbol: "circle",
-        //                 radius: 3
-        //             },
-        //             shadowSize: 0
-        //         },
-        //         points: {
-        //             show: true,
-        //         },
-        //         legend: {
-        //             show: false
-        //         },
-        //         grid: {
-        //             show: false
-        //         }
-        //     });
-        //     // Line Chart  #flotLine5 End
-        //     // Traffic Chart using chartist
-        //     if ($('#traffic-chart').length) {
-        //         var chart = new Chartist.Line('#traffic-chart', {
-        //           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        //           series: [
-        //           [0, 18000, 35000,  25000,  22000,  0],
-        //           [0, 33000, 15000,  20000,  15000,  300],
-        //           [0, 15000, 28000,  15000,  30000,  5000]
-        //           ]
-        //       }, {
-        //           low: 0,
-        //           showArea: true,
-        //           showLine: false,
-        //           showPoint: false,
-        //           fullWidth: true,
-        //           axisX: {
-        //             showGrid: true
-        //         }
-        //     });
+            var plot = $.plot($('#flotLine5'),[{
+                data: newCust,
+                label: 'New Data Flow',
+                color: '#fff'
+            }],
+            {
+                series: {
+                    lines: {
+                        show: true,
+                        lineColor: '#fff',
+                        lineWidth: 2
+                    },
+                    points: {
+                        show: true,
+                        fill: true,
+                        fillColor: "#ffffff",
+                        symbol: "circle",
+                        radius: 3
+                    },
+                    shadowSize: 0
+                },
+                points: {
+                    show: true,
+                },
+                legend: {
+                    show: false
+                },
+                grid: {
+                    show: false
+                }
+            });
+            // Line Chart  #flotLine5 End
+            // Traffic Chart using chartist
+            if ($('#traffic-chart').length) {
+                var chart = new Chartist.Line('#traffic-chart', {
+                  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                  series: [
+                  [0, 18000, 35000,  25000,  22000,  0],
+                  [0, 33000, 15000,  20000,  15000,  300],
+                  [0, 15000, 28000,  15000,  30000,  5000]
+                  ]
+              }, {
+                  low: 0,
+                  showArea: true,
+                  showLine: false,
+                  showPoint: false,
+                  fullWidth: true,
+                  axisX: {
+                    showGrid: true
+                }
+            });
 
-        //         chart.on('draw', function(data) {
-        //             if(data.type === 'line' || data.type === 'area') {
-        //                 data.element.animate({
-        //                     d: {
-        //                         begin: 2000 * data.index,
-        //                         dur: 2000,
-        //                         from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-        //                         to: data.path.clone().stringify(),
-        //                         easing: Chartist.Svg.Easing.easeOutQuint
-        //                     }
-        //                 });
-        //             }
-        //         });
-        //     }
-        //     // Traffic Chart using chartist End
-        //     //Traffic chart chart-js
-        //     if ($('#TrafficChart').length) {
-        //         var ctx = document.getElementById( "TrafficChart" );
-        //         ctx.height = 150;
-        //         var myChart = new Chart( ctx, {
-        //             type: 'line',
-        //             data: {
-        //                 labels: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" ],
-        //                 datasets: [
-        //                 {
-        //                     label: "Visit",
-        //                     borderColor: "rgba(4, 73, 203,.09)",
-        //                     borderWidth: "1",
-        //                     backgroundColor: "rgba(4, 73, 203,.5)",
-        //                     data: [ 0, 2900, 5000, 3300, 6000, 3250, 0 ]
-        //                 },
-        //                 {
-        //                     label: "Bounce",
-        //                     borderColor: "rgba(245, 23, 66, 0.9)",
-        //                     borderWidth: "1",
-        //                     backgroundColor: "rgba(245, 23, 66,.5)",
-        //                     pointHighlightStroke: "rgba(245, 23, 66,.5)",
-        //                     data: [ 0, 4200, 4500, 1600, 4200, 1500, 4000 ]
-        //                 },
-        //                 {
-        //                     label: "Targeted",
-        //                     borderColor: "rgba(40, 169, 46, 0.9)",
-        //                     borderWidth: "1",
-        //                     backgroundColor: "rgba(40, 169, 46, .5)",
-        //                     pointHighlightStroke: "rgba(40, 169, 46,.5)",
-        //                     data: [1000, 5200, 3600, 2600, 4200, 5300, 0 ]
-        //                 }
-        //                 ]
-        //             },
-        //             options: {
-        //                 responsive: true,
-        //                 tooltips: {
-        //                     mode: 'index',
-        //                     intersect: false
-        //                 },
-        //                 hover: {
-        //                     mode: 'nearest',
-        //                     intersect: true
-        //                 }
+                chart.on('draw', function(data) {
+                    if(data.type === 'line' || data.type === 'area') {
+                        data.element.animate({
+                            d: {
+                                begin: 2000 * data.index,
+                                dur: 2000,
+                                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                                to: data.path.clone().stringify(),
+                                easing: Chartist.Svg.Easing.easeOutQuint
+                            }
+                        });
+                    }
+                });
+            }
+            // Traffic Chart using chartist End
+            //Traffic chart chart-js
+            if ($('#TrafficChart').length) {
+                var ctx = document.getElementById( "TrafficChart" );
+                ctx.height = 150;
+                var myChart = new Chart( ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" ],
+                        datasets: [
+                        {
+                            label: "Visit",
+                            borderColor: "rgba(4, 73, 203,.09)",
+                            borderWidth: "1",
+                            backgroundColor: "rgba(4, 73, 203,.5)",
+                            data: [ 0, 2900, 5000, 3300, 6000, 3250, 0 ]
+                        },
+                        {
+                            label: "Bounce",
+                            borderColor: "rgba(245, 23, 66, 0.9)",
+                            borderWidth: "1",
+                            backgroundColor: "rgba(245, 23, 66,.5)",
+                            pointHighlightStroke: "rgba(245, 23, 66,.5)",
+                            data: [ 0, 4200, 4500, 1600, 4200, 1500, 4000 ]
+                        },
+                        {
+                            label: "Targeted",
+                            borderColor: "rgba(40, 169, 46, 0.9)",
+                            borderWidth: "1",
+                            backgroundColor: "rgba(40, 169, 46, .5)",
+                            pointHighlightStroke: "rgba(40, 169, 46,.5)",
+                            data: [1000, 5200, 3600, 2600, 4200, 5300, 0 ]
+                        }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        tooltips: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        hover: {
+                            mode: 'nearest',
+                            intersect: true
+                        }
 
-        //             }
-        //         } );
-        //     }
-        //     //Traffic chart chart-js  End
-        //     // Bar Chart #flotBarChart
-        //     $.plot("#flotBarChart", [{
-        //         data: [[0, 18], [2, 8], [4, 5], [6, 13],[8,5], [10,7],[12,4], [14,6],[16,15], [18, 9],[20,17], [22,7],[24,4], [26,9],[28,11]],
-        //         bars: {
-        //             show: true,
-        //             lineWidth: 0,
-        //             fillColor: '#ffffff8a'
-        //         }
-        //     }], {
-        //         grid: {
-        //             show: false
-        //         }
-        //     });
-        //     // Bar Chart #flotBarChart End
-        // });
+                    }
+                } );
+            }
+            //Traffic chart chart-js  End
+            // Bar Chart #flotBarChart
+            $.plot("#flotBarChart", [{
+                data: [[0, 18], [2, 8], [4, 5], [6, 13],[8,5], [10,7],[12,4], [14,6],[16,15], [18, 9],[20,17], [22,7],[24,4], [26,9],[28,11]],
+                bars: {
+                    show: true,
+                    lineWidth: 0,
+                    fillColor: '#ffffff8a'
+                }
+            }], {
+                grid: {
+                    show: false
+                }
+            });
+            // Bar Chart #flotBarChart End
+        });
 
     $('.show-details-btn').on('click', function(e) {
         e.preventDefault();
@@ -501,7 +514,7 @@
 
         e.preventDefault();
         var fa = $(this);
-        $(this).find('#rep2').html('<span class="btn btn-info"> plaise wait</span>');
+        $(this).find('#rep2').html('<span class="text-info">...</span>');
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -514,10 +527,10 @@
             dataType: 'json',
             success: function(response) {
                 if(response.success == true) {
-                    fa.find('#rep2').html('<span class="text-'+response.status+'">'+response.mesg+'</span>');
-
+                    fa.find('#rep2').html("<i class='fa fa-check text-success'></i>");
+                    fa.find('#rep2').fadeIn().delay(2000).fadeOut();
                 } else {
-                    fa.find('#rep2').html('<span class="text-'+response.status+'">'+response.mesg+'</span>');
+                    fa.find('#rep2').html("<i class='fa fa-times text-danger'></i>");
                 }
             }
         });
@@ -546,6 +559,66 @@
     $(".showImgModal").on('click', function(){
         var image = $(this).attr("data-image");
         $("#showImg").attr('src', image);
+    });
+
+
+    $("#order_by").on('change', function(){
+        var ord_by_type = $(this).val(); // Nom du champ qui permettra d'ordonner les dossiers
+        if(ord_by_type != "" && ['nom','date_inscription'].includes(ord_by_type)){ // du genre inArray. Le tri ne s'effectue que pour le nom et date_inscription
+            $("#orderByForm").submit();
+        }
+    });
+
+    $(document).on('change', '#filter_by1', function(){ // on récupère le type de filtrage et on charge le <select> suivant
+        var filter_type = $(this).val();
+        var dashboard_base_url = $('meta[name="dashboard_base_url"]').attr('content'); // on récupère le base_url du dashboard
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: dashboard_base_url+"/load_values",
+            type: 'post' ,
+            data: "filter_type="+filter_type,
+            dataType: 'json',
+            success: function(response) {
+                if(response.statut) {
+                    $(".pourquoi").removeClass('d-none');
+
+                    var dom = "<select name='value_filter' id='value_filter' required='' class='standardSelect2'><option value=''>Choisir la valeur de filtre</option>";
+
+                    // insertion des valeurs du select
+                    for (var i = 0; i < response.values.length; i++) {
+                        dom += "<option value='"+response.values[i].id+"'>"+response.values[i].nom+"</option>";
+                    }
+                    dom += "</select>";
+
+                    $(".pourquoi").html(dom);
+
+                    jQuery(".standardSelect2").chosen({
+                        disable_search_threshold: 10,
+                        no_results_text: "Oops, nothing found!",
+                        width: "100%"
+                    });
+                }
+            }
+        });
+    });
+
+    // ici
+    $(document).on('change', '#value_filter', function(){
+        // On récupère les 2 valeurs, on s'assure que nobody is null et on balance le form
+        var type_filter = $("#filter_by1").val();
+        var value_filter = $("#value_filter").val();
+
+        console.log(type_filter);
+        console.log(value_filter);
+
+        // On envoie le fomr ssi les 2 var sont non nulles
+        if(type_filter != "" && value_filter != ""){
+            $("#filterByForm").submit();
+        }
     });
     </script>
 </body>
