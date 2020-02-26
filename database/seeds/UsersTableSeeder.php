@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
         	'email' => "email@domain.com",
         	'password' => bcrypt('passwd1234'),
             'priority' => '2',
+            'profile_img' => 'koala.jpg',
         ]);
         App\User::create([
             'name' => "Manager 1",

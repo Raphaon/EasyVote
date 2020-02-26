@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             // pour pouvoir gérer les # cas d'admin (gérant du système d'élection, superadmin, etc ...)
             $table->enum('priority', [Constants::MANAGERPRIORITY, Constants::ADMINPRIORITY]);
+            $table->string('profile_img')->default("admin.jpg");
             $table->rememberToken();
             $table->timestamps();
         });

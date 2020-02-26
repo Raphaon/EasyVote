@@ -31,5 +31,13 @@ class RegionsTableSeeder extends Seeder
         	'codeReg' => "SU",
         	'nomReg' => "Sud"
         ]);
+        App\Region::create([
+            'codeReg' => "LIT",
+            'nomReg' => "Littoral"
+        ]);
+        App\Region::create([
+            'codeReg' => "LIT",
+            'nomReg' => "Littoral"
+        ]);
     }
 }

@@ -11,6 +11,8 @@
 
 namespace App\Http\Controllers;
 
+use App;
+use Auth;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -30,5 +32,17 @@ class AdminController extends Controller
             'title' => "Dashboard | "
         ];
         return view('admin.index', $data);
+    }
+
+    /**
+     * Afficher les logs qu'un gérant d'Elecam peut voir
+     */
+    public function logs(){
+        $data = [
+            'title' => "Logs du système - Admin",
+            'logs' => App\Log::orderBy('action_time', 'desc')->get(),
+        ];
+
+        return view("admin.logs", $data);
     }
 }

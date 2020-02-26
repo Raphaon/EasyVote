@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('manager/css/pe-icon-7-stroke.min.css') }}">
     <link rel="stylesheet" href="{{ asset('manager/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('manager/css/cs-skin-elastic.css') }}">
+    <link rel="stylesheet" href="{{ asset('manager/css/lib/datatable/dataTables.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('manager/css/style.css') }}">
     <script type ="text/javascript" src="{{ asset('manager/js/html5shiv.min.js') }}"></script>
     <link href="{{ asset('manager/css/chartist.min.css') }}" rel="stylesheet">
@@ -25,41 +26,9 @@
     <link href="{{ asset('manager/css/weather-icons.css') }}" rel="stylesheet" />
     <link href="{{ asset('manager/css/fullcalendar.min.css') }}" rel="stylesheet" />
 
+
    <style>
-    #weatherWidget .currentDesc {
-        color: #ffffff!important;
-    }
-        .traffic-chart {
-            min-height: 335px;
-        }
-        #flotPie1  {
-            height: 150px;
-        }
-        #flotPie1 td {
-            padding:3px;
-        }
-        #flotPie1 table {
-            top: 20px!important;
-            right: -10px!important;
-        }
-        .chart-container {
-            display: table;
-            min-width: 270px ;
-            text-align: left;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-        #flotLine5  {
-             height: 105px;
-        }
-
-        #flotBarChart {
-            height: 150px;
-        }
-        #cellPaiChart{
-            height: 160px;
-        }
-
+        
     </style>
 </head>
 
@@ -69,85 +38,25 @@
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    {{-- <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion des inscriptions</a>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion du système ELECAM</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><a href="{{ route('dashboard.inscriptions.waiting') }}">Inscriptions non traitées</a></li>
-                            <li><a href="ui-tabs.html">Inscriptions rejetées </a></li>
-                            <li></i><a href="ui-cards.html">Inscriptions validées</a></li>
+                            <li><a href="{{ route('admin.regions.all') }}">Régions</a></li>
+                            <li><a href="{{ route('admin.departements.all') }}">Départements</a></li>
+                            <li></i><a href="{{ route('admin.communes.all') }}">Communes</a></li>
+                            <li></i><a href="{{ route('admin.bureau_de_vote.all') }}">Bureaux de vote</a></li>
                         </ul>
                     </li>
-                    <li><a href="ui-cards.html">Cartes d'électeurs disponibles</a></li> --}}
+                    <li><a href="#">Cartes d'électeurs disponibles</a></li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion des administrateurs</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><a href="ui-badges.html">Ajouter un administrateur</a></li>
-                            <li><a href="ui-buttons.html">Tous les administrateurs</a></li>
+                            <li><a href="#">Ajouter un administrateur</a></li>
+                            <li><a href="#">Tous les administrateurs</a></li>
                         </ul>
                     </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Paramètres</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><a href="ui-badges.html">Régions</a></li>
-                            <li><a href="ui-buttons.html">Départements</a></li>
-                            <li><a href="ui-buttons.html">Communes</a></li>
-                            <li><a href="ui-buttons.html">Bureaux de votes</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="ui-cards.html">Logs du système</a></li>
-                    <li><a href="ui-cards.html">Mon profil</a></li>
-                    {{-- <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tables</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>
-                            <li><i class="fa fa-table"></i><a href="tables-data.html">Data Table</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Forms</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="menu-title">Icons</li><!-- /.menu-title -->
-
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>Icons</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-fort-awesome"></i><a href="font-fontawesome.html">Font Awesome</a></li>
-                            <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Themefy Icons</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="widgets.html"> <i class="menu-icon ti-email"></i>Widgets </a>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>Charts</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-line-chart"></i><a href="charts-chartjs.html">Chart JS</a></li>
-                            <li><i class="menu-icon fa fa-area-chart"></i><a href="charts-flot.html">Flot Chart</a></li>
-                            <li><i class="menu-icon fa fa-pie-chart"></i><a href="charts-peity.html">Peity Chart</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-area-chart"></i>Maps</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-map-o"></i><a href="maps-gmap.html">Google Maps</a></li>
-                            <li><i class="menu-icon fa fa-street-view"></i><a href="maps-vector.html">Vector Maps</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-title">Extras</li><!-- /.menu-title -->
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Pages</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Login</a></li>
-                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Register</a></li>
-                            <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Forget Pass</a></li>
-                        </ul>
-                    </li> --}}
+                    <li><a href="{{ route('admin.logs') }}">Logs du système</a></li>
+                    <li><a href="#">Mon profil</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -242,7 +151,7 @@
 
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="{{ asset('manager/images/admin.jpg') }}" alt="User Avatar">
+                            <img class="user-avatar rounded-circle" src="{{ $admin->profile }}" alt="User Avatar">
                         </a>
 
                         <div class="user-menu dropdown-menu">
@@ -292,24 +201,30 @@
     <script src="{{ asset('manager/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('manager/js/jquery.matchHeight.min.js') }}"></script>
     <script src="{{ asset('manager/js/main.js') }}"></script>
-
     <!--  Chart js -->
     <script src="{{ asset('manager/js/Chart.bundle.min.js') }}"></script>
-
     <!--Chartist Chart-->
     <script src="{{ asset('manager/js/chartist.min.js') }}"></script>
     <script src="{{ asset('manager/js/chartist-plugin-legend.min.js') }}"></script>
-
     <script src="{{ asset('manager/js/jquery.flot.min.js') }}"></script>
     <script src="{{ asset('manager/js/jquery.flot.pie.min.js') }}"></script>
     <script src="{{ asset('manager/js/jquery.flot.spline.min.js') }}"></script>
-
     <script src="{{ asset('manager/js/jquery.simpleWeather.min.js') }}"></script>
     <script src="{{ asset('manager/js/init/weather-init.js') }}"></script>
-
     <script src="{{ asset('manager/js/moment.min.js') }}"></script>
     <script src="{{ asset('manager/js/fullcalendar.min.js') }}"></script>
     <script src="{{ asset('manager/js/init/fullcalendar-init.js') }}"></script>
+    <script src="{{ asset('manager/js/lib/data-table/datatables.min.js') }}"></script>
+    <script src="{{ asset('manager/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('manager/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('manager/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('manager/js/lib/data-table/jszip.min.js') }}"></script>
+    <script src="{{ asset('manager/js/lib/data-table/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('manager/js/lib/data-table/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('manager/js/lib/data-table/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('manager/js/lib/data-table/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('manager/js/init/datatables-init.js') }}"></script>
+    <script src="{{ asset('manager/js/lib/chosen/chosen.jquery.min.js') }}"></script>
 
     <!--Local Stuff-->
     <script>

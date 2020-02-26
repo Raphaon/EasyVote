@@ -17,67 +17,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
 class InscriptionsController extends Controller
-{    
-
+{
 	/**
-	 * Lister et traiter toes les inscriptions non encore traitées
+	 * Lister et traiter toutes les inscriptions non encore traitées
+     * @param [Request] $request : Paramètre soumis en POST lors de la soummission du form
 	 */
     public function waiting(Request $request){
         if(!empty($request->post())){
             $values = $this->loadInscriptions($request, Constants::SUBMITTEDINSCRIPTION); // Appel de la fonction magique
             $inscs = $values['values'];
         }else {
-            $inscs = Personne::where("statut_process",Constants::SUBMITTEDINSCRIPTION)->orderBy("date_inscription")->paginate(10);
+            $inscs = Personne::where("statut_process",Constants::SUBMITTEDINSCRIPTION)->orderBy("date_inscription")->get();
         }
-        // if(!empty($request->post())){
-        //     if(isset($request->order_by)){
-        //     // if($this->validate($request, ['order_by'=>'required'])){
-        //         $ord_by = $request->order_by;
-        //         $inscs = Personne::where("statut_process",Constants::SUBMITTEDINSCRIPTION)->orderBy($ord_by)->paginate(10);
-        //     }elseif(isset($request->type_filter) && isset($request->value_filter)){
-        //         $type = $request->type_filter;
-        //         $value = $request->value_filter;
-        //         $inscs = array(); // Initialisation d'un tableau allant contenir les inscriptions
-
-        //         // On commence par bureau_de_vote
-        //         if(strcmp($type, "bureau_de_vote") == 0){
-        //             $inscs = Personne::where([
-        //                     "bureau_de_vote_id" => $value,
-        //                     "statut_process" => Constants::SUBMITTEDINSCRIPTION])->paginate(10); // Pour pouvoir effectuer la pagination tranquilos
-        //             // $inscs = App\BureauDeVote::find($value)->personnes;
-        //         }elseif(strcmp($type, "commune") == 0){
-        //             $inscs = Personne::where([
-        //                     "commune_id"=>$value,
-        //                     "statut_process" => Constants::SUBMITTEDINSCRIPTION])->paginate(10); // Pour pouvoir effectuer la pagination tranquilos
-        //             // $inscs = App\Commune::find($value)->personnes;
-        //         }elseif(strcmp($type, "departement") == 0){
-        //             *
-        //              * Bon j'utilise les méthodes(hasManyTrough) définies dans les models(Region,Departement,etc...)
-        //              * pour éviter les foreach etc ...
-        //              * 
-                     
-        //             $communes_id = App\Departement::find($value)->pluck('id'); // Je balance les id des communes dans un tableau
-
-        //             $inscs = Personne::whereIn('commune_id', $communes_id)->where("statut_process",Constants::SUBMITTEDINSCRIPTION)
-        //                                                                   ->paginate(10); // et baaam !
-        //         }elseif(strcmp($type, "region") == 0){
-        //             /**
-        //              * Bon j'utilise les méthodes(hasManyTrough) définies dans les models(Region,Departement,etc...)
-        //              * pour éviter les foreach etc ...
-        //              * 
-        //              */
-        //             $communes_id = App\Region::find($value)->communes->pluck('id'); // Je balance les id des communes dans un tableau
-
-        //             $inscs = Personne::whereIn('commune_id', $communes_id)->where("statut_process",Constants::SUBMITTEDINSCRIPTION)
-        //                                                                   ->paginate(10); // et baaam !
-        //             // dd(count($inscs));
-        //         }
-        //     }else{ // N'est pas supposé arriver donc ...
-        //         $inscs = Personne::where("statut_process",Constants::SUBMITTEDINSCRIPTION)->orderBy("date_inscription")->paginate(10);
-        //     }
-        // }else {
-        //     $inscs = Personne::where("statut_process",Constants::SUBMITTEDINSCRIPTION)->orderBy("date_inscription")->paginate(10);
-        // }
 
     	$data = [
     		'title' => "Inscriptions non traitées - ELECAM",
@@ -90,21 +41,16 @@ class InscriptionsController extends Controller
     }
 
     /**
-     * Lister et traiter toes les inscriptions rejetées 
+     * Lister et traiter toes les inscriptions rejetées
+     * @param [Request] $request : Paramètre soumis en POST lors de la soummission du form
      */
     public function rejected(Request $request){
         if(!empty($request->post())){
             $values = $this->loadInscriptions($request, Constants::REJECTEDINSCRIPTION); // Appel de la fonction magique
             $inscs = $values['values'];
         }else {
-            $inscs = Personne::where("statut_process",Constants::REJECTEDINSCRIPTION)->orderBy("date_inscription")->paginate(10);
+            $inscs = Personne::where("statut_process",Constants::REJECTEDINSCRIPTION)->orderBy("date_inscription")->get();
         }
-        // if(!empty($request->post())){
-        //     $ord_by = $request->order_by;
-        //     $inscs = Personne::where("statut_process",Constants::REJECTEDINSCRIPTION)->orderBy($ord_by)->paginate(10);
-        // }else {
-        //     $inscs = Personne::where("statut_process",Constants::REJECTEDINSCRIPTION)->orderBy("date_inscription")->paginate(10);
-        // }
 
         $data = [
             'title' => "Inscriptions rejetées - ELECAM",
@@ -117,21 +63,15 @@ class InscriptionsController extends Controller
 
     /**
      * Lister et (eventuellement) traiter toes les inscriptions valides
+     * @param [Request] $request : Paramètre soumis en POST lors de la soummission du form
      */
     public function valide(Request $request){
         if(!empty($request->post())){
             $values = $this->loadInscriptions($request, Constants::VALIDEINSCRIPTION); // Appel de la fonction magique
             $inscs = $values['values'];
         }else {
-            $inscs = Personne::where("statut_process",Constants::VALIDEINSCRIPTION)->orderBy("date_inscription")->paginate(10);
+            $inscs = Personne::where("statut_process",Constants::VALIDEINSCRIPTION)->orderBy("date_inscription")->get();
         }
-        
-        // if(!empty($request->post())){
-        //     $ord_by = $request->order_by;
-        //     $inscs = Personne::where("statut_process",Constants::VALIDEINSCRIPTION)->orderBy($ord_by)->paginate(10);
-        // }else {
-        //     $inscs = Personne::where("statut_process",Constants::VALIDEINSCRIPTION)->orderBy("date_inscription")->paginate(10);
-        // }
 
         $data = [
             'title' => "Inscriptions validées - ELECAM",
@@ -144,7 +84,92 @@ class InscriptionsController extends Controller
     }
 
     /**
+     * Page qui va montrer plus en détail les infos d'inscription pour le traitement
+     * @param [int] $id : id de la personne en question
+     */
+    public function traitement_insc($id){
+        $inscription = App\Personne::find($id);
+
+        // Si la personne n'existe pas on le chasse de cette page ... 
+        if(is_null($inscription)){
+            return redirect()->back();
+        }
+
+        $data = [
+            'title' => "Traitement d'inscription - ELECAM",
+            'inscription' => $inscription,
+            'route_back' => redirect()->back()->getTargetUrl(),
+        ];
+
+        return view("dashboard.inscriptions.traitement", $data);
+    }
+
+    /**
+     * Ajouter le matricule d'un électeur et éventuellement créer sa carte de vote
+     * @param [Request] $request : Paramètre soumis en POST lors de la soummission du form
+     */
+    public function add_matricule_electeur(Request $request){
+        $this->validate($request, [
+            'personne_id' => 'required',
+            'matricule' => "required",
+            'date_deliv' => "required",
+        ]);
+
+        // On aura besoin de certaines informations de cette personne
+        $personne = App\Personne::find($request->personne_id);
+        // Enregistrer le matricule (App\Electeur). Donc on fais un update sur lui
+
+        $electeur = App\Electeur::where('personne_id', $request->personne_id)->first(); // On est pas supposé en avoir 2 de toute façon ..
+        $electeur->update([
+            'matricule' => $request->matricule,
+        ]);
+
+        // Puis on enregistre le log
+        App\Log::create([
+            'user_id' => Auth::user()->id,
+            'action' => "AJOUT MATRICULE_ELECTEUR of <strong>". ucwords($personne->nom) ." " . ucwords($personne->prenom) ."(CNI : ".$personne->numCNI.")</strong>",
+            'action_time' => time(),
+            'level' => Constants::MANAGERLOGSLEVEL, // c-a-d c'est un gérant d'Elecam qui a éffectué l'action
+        ]);
+
+        // Créer la carte_de_vote si elle n'existe pas encore
+        $carte_de_vote = App\CarteDeVote::where('electeur_id', $request->personne_id)->first();
+        if(is_null($carte_de_vote)){
+            $carte_de_vote = App\CarteDeVote::create([
+                'electeur_id' => $request->personne_id,
+                'dateDeliv' => strtotime($request->date_deliv),
+                'statut' => Constants::CARDNOTAVAILABLE
+            ]);
+
+            $action = "CREATION CARTE_ELECTEUR";
+        }else{ // Si la carte existe déjà on fait juste un update ..
+            $carte_de_vote->update([
+                'dateDeliv' => strtotime($request->date_deliv),
+                'statut' => Constants::CARDNOTAVAILABLE, // Comment ceci change ?????????
+            ]);
+
+            $action = "MODIFICATION CARTE_ELECTEUR";
+        }
+
+        // Puis on enregistre le log ..
+        App\Log::create([
+            'user_id' => Auth::user()->id,
+            'action' => "$action de <strong>". ucwords($personne->nom) ." " . ucwords($personne->prenom) ."(CNI : ".$personne->numCNI.")</strong>",
+            'action_time' => time(),
+            'level' => Constants::MANAGERLOGSLEVEL, // c-a-d c'est un gérant d'Elecam qui a éffectué l'action
+        ]);
+
+        $data = [
+            'status' => "success",
+            'mesg' => "Informations ajoutées avec succès."
+        ];
+
+        echo json_encode($data); exit();
+    }
+
+    /**
      * Mettre à jour le statut du dossier d'un inscrit
+     * @param [Request] $request : Paramètre soumis en POST lors de la soummission du form
      */
     public function updateStatutProcess(Request $request){
 
@@ -163,7 +188,7 @@ class InscriptionsController extends Controller
             // Puis on enregistre le log
             App\Log::create([
                 'user_id' => Auth::user()->id,
-                'action' => "REJECTEDINSCRIPTION of ". $person_to_update->nom ." " . $person_to_update->prenom ."(CNI : ".$person_to_update->numCNI.")",
+                'action' => "REJECT INSCRIPTION de <strong>". ucwords($personne->nom) ." " . ucwords($personne->prenom) ."(CNI : ".$personne->numCNI.")</strong>",
                 'action_time' => time(),
                 'level' => Constants::MANAGERLOGSLEVEL, // c-a-d c'est un gérant d'Elecam qui a éffectué l'action
             ]);
@@ -173,17 +198,51 @@ class InscriptionsController extends Controller
                 'mesg' => "Dossier rejeté avec succès !",
             ];
         }elseif($statut == 2){
-            // A ce stade, il faut valider et instancier la personne ==> electeur
-            $person_to_update->update(['statut_process'=>Constants::VALIDEINSCRIPTION]);
+            /**
+             * !!! TOUT D'ABORD S'ASSURER QUE TOUS LES CHAMPS ONT BIEN ÉTÉ VALIDÉS !!!
+             */
+            $statut_elements = unserialize($person_to_update->statut_elements);
+            if($statut_elements){
+                foreach ($statut_elements as $el) {
+                    // SI AU MOINS un champ n'est pas accepté, on fait riaaaan !
+                    if(strstr($el, '_refuse')){ // chaîne de caractère qui montre qu'un uchamp a été rejété ..
+                        $data = [
+                            'mesg' => "Valider premièrement toutes les informations d'inscription",
+                        ];
 
-            App\Electeur::create([
-                'personne_id' => $person_to_update->id,
-            ]);
+                        echo json_encode($data);
+                        exit(); // Vu qu'il y'a d'autres blocs de code après cette ligne
+                    }
+                }
+            }
+            if(!$statut_elements){ // si il n'a même pas encore check on le chasse .. pian !
+                $data = [
+                    'mesg' => "Valider premièrement toutes les informations d'inscription",
+                ];
+
+                echo json_encode($data);
+                exit(); // Vu qu'il y'a d'autres blocs de code après cette ligne
+            }
+
+            // A ce stade, il faut valider et instancier la personne ==> electeur
+
+            // On fait le update ssi le dossier n'est pas actuellement déjà validé
+            // Pas trop nécesaire de s'attarder ici mais bon ...
+            if($person_to_update->statut_process != Constants::VALIDEINSCRIPTION){
+                $person_to_update->update(['statut_process'=>Constants::VALIDEINSCRIPTION]);
+            }
+
+            // Puis on crée l'electeur si ce n'était pas déjà le cas
+            if(count(App\Electeur::where('personne_id',$person_to_update->id)->get()) === 0){
+                App\Electeur::create([
+                    'personne_id' => $person_to_update->id,
+                ]);
+            }
 
             // Puis on enregistre le log
             App\Log::create([
                 'user_id' => Auth::user()->id,
-                'action' => "VALIDEINSCRIPTION of ". $person_to_update->nom ." " . $person_to_update->prenom ."(CNI : ".$person_to_update->numCNI.")",
+                'action' => "VALIDATION INSCRIPTION de <strong>". ucwords($personne->nom) ." " . ucwords($personne->prenom) ."(CNI : ".$personne->numCNI.")</strong>",
                 'action_time' => time(),
                 'level' => Constants::MANAGERLOGSLEVEL, // c-a-d c'est un gérant d'Elecam qui a éffectué l'action
             ]);
@@ -204,6 +263,7 @@ class InscriptionsController extends Controller
 
     /**
      * Mettre à jour le statut des différents éléments du dossier d'un inscrit
+     * @param [Request] $request : Paramètre soumis en POST lors de la soummission du form
      */
     public function updateStatutElements(Request $request){
         $this->validate($request, [
@@ -235,6 +295,14 @@ class InscriptionsController extends Controller
             ];
         }
 
+        // Puis on enregistre le log
+            App\Log::create([
+                'user_id' => Auth::user()->id,
+                'action' => "ETUDE DOSSIER D'INSCRIPTION de <strong>". ucwords($personne->nom) ." " . ucwords($personne->prenom) ."(CNI : ".$personne->numCNI.")</strong>",
+                'action_time' => time(),
+                'level' => Constants::MANAGERLOGSLEVEL, // c-a-d c'est un gérant d'Elecam qui a éffectué l'action
+            ]);
+
         echo json_encode($data);
     }
 
@@ -252,7 +320,7 @@ class InscriptionsController extends Controller
             // if($this->validate($request, ['order_by'=>'required'])){
             $ord_by = $request->order_by;
             $retour['ord_by'] = $ord_by;
-            $inscs = Personne::where("statut_process",$statut_process)->orderBy($ord_by)->paginate(10);
+            $inscs = Personne::where("statut_process",$statut_process)->orderBy($ord_by)->get();
         }elseif(isset($request->type_filter) && isset($request->value_filter)){
             $type = $request->type_filter;
             $value = $request->value_filter;
@@ -262,12 +330,12 @@ class InscriptionsController extends Controller
         if(strcmp($type, "bureau_de_vote") == 0){
             $inscs = Personne::where([
                 "bureau_de_vote_id" => $value,
-                    "statut_process" => $statut_process])->paginate(10); // Pour pouvoir effectuer la pagination tranquilos
+                    "statut_process" => $statut_process])->get(); // Pour pouvoir effectuer la pagination tranquilos
             // $inscs = App\BureauDeVote::find($value)->personnes;
         }elseif(strcmp($type, "commune") == 0){
             $inscs = Personne::where([
                 "commune_id"=>$value,
-                    "statut_process" => $statut_process])->paginate(10); // Pour pouvoir effectuer la pagination tranquilos
+                    "statut_process" => $statut_process])->get(); // Pour pouvoir effectuer la pagination tranquilos
             // $inscs = App\Commune::find($value)->personnes;
         }elseif(strcmp($type, "departement") == 0){
             /**
@@ -275,11 +343,11 @@ class InscriptionsController extends Controller
              * pour éviter les foreach etc ...
              * 
              */
-            $communes_id = App\Departement::find($value)->pluck('id'); // Je balance les id des communes dans un tableau
+            $communes_id = App\Departement::find($value)->communes->pluck('id'); // Je balance les id des communes dans un tableau
 
             $inscs = Personne::whereIn('commune_id', $communes_id)->where("statut_process",$statut_process)
-                                                                  ->paginate(10); // et baaam !
-                                                              }elseif(strcmp($type, "region") == 0){
+                                                                  ->get(); // et baaam !
+        }elseif(strcmp($type, "region") == 0){
             /**
              * Bon j'utilise les méthodes(hasManyTrough) définies dans les models(Region,Departement,etc...)
              * pour éviter les foreach etc ...
@@ -288,11 +356,10 @@ class InscriptionsController extends Controller
             $communes_id = App\Region::find($value)->communes->pluck('id'); // Je balance les id des communes dans un tableau
 
             $inscs = Personne::whereIn('commune_id', $communes_id)->where("statut_process",$statut_process)
-                                                                  ->paginate(10); // et baaam !
-            // dd(count($inscs));
+                                                                  ->get(); // et baaam !
                                                               }
         }else{ // N'est pas supposé arriver donc ...
-            $inscs = Personne::where("statut_process",$statut_process)->orderBy("date_inscription")->paginate(10);
+            $inscs = Personne::where("statut_process",$statut_process)->orderBy("date_inscription")->get();
         }
         
 

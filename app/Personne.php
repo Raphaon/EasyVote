@@ -43,4 +43,12 @@ class Personne extends Model
     public function getimgPersonneAttribute(){
         return asset("uploads/personnes/".$this->photoP);
     }
+
+    /**
+     * Personne .. Electeur .. CarteDeVote
+     * Compris ?? Je récupère directement toutes la carte_de_vote d'une personne. Voir la doc pour plus d'explications
+     */
+    // public function carteDeVote(){
+    //     return $this->hasOneThrough("App\CarteDeVote", 'App\Electeur');
+    // }
 }

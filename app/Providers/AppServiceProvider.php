@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
             if($lang=="en"){
                 $r_lang = "fr";
             }else{
-                $r_lang == "en";
+                $r_lang = "en";
             }
 
             $data = [

@@ -15,12 +15,11 @@ class CreateCarteDeVotesTable extends Migration
     {
         Schema::create('carte_de_votes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('imgRecto');
-            $table->string('imgVerso');
+            $table->string('imgRecto')->nullable();
+            $table->string('imgVerso')->nullable();
             $table->string('dateDeliv');
-            $table->integer('compteARebours');
             $table->enum('statut',['0','1']);
-            $table->integer('personne_id');
+            $table->integer('electeur_id');
             $table->enum('statutCarte', [Constants::CARDNOTAVAILABLE, Constants::CARDAVAILABLE, Constants::CARDREMOVED]);
             $table->timestamps();
         });
