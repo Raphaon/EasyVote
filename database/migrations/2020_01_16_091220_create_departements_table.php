@@ -17,10 +17,10 @@ class CreateDepartementsTable extends Migration
             $table->increments('id');
             $table->string('codeDep');
             $table->string('nomDep');
-            $table->timestamps();
-
             // foreign key
             $table->integer('region_id');
+
+            $table->timestamps();
         });
     }
 

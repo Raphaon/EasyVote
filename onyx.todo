@@ -9,5 +9,8 @@
  ✔ intégrer le template côté dashboarb (agent elecam) @done (20-01-18 12:00)
  ✔  Navbar du dashboard (agent elecam) @done (20-01-18 13:09)
  ✔ création des # fichiers (en cours) @done (20-01-20 15:37)
+ ✔ ajouter(dans les parties gérées déjà effectuées) et afficher les logs du système @done (20-01-29 16:25)
  ☐ gestion des inscriptions niveau dashboard (v1 bonne)
  ☐ compléter la navbar du côté dashboard et inclure les pages nécessaires
+ ✔ CRUD des régions&departements&communes&bureaudevote (côté admin) @done (20-02-05 16:46)
+ ☐ Gestion du profile d'un gérant d'ELECAM

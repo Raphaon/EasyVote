@@ -28,41 +28,190 @@
     <link href="{{ asset('manager/css/fullcalendar.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('manager/css/lib/chosen/chosen.min.css') }}">
 
-   <style>
-    #weatherWidget .currentDesc {
-        color: #ffffff!important;
-    }
-        .traffic-chart {
+    <style type="text/css">
+        #weatherWidget .currentDesc {
+            color: #ffffff!important;
+          }
+          .traffic-chart {
             min-height: 335px;
-        }
-        #flotPie1  {
+          }
+          #flotPie1  {
             height: 150px;
-        }
-        #flotPie1 td {
+          }
+          #flotPie1 td {
             padding:3px;
-        }
-        #flotPie1 table {
+          }
+          #flotPie1 table {
             top: 20px!important;
             right: -10px!important;
-        }
-        .chart-container {
+          }
+          .chart-container {
             display: table;
             min-width: 270px ;
             text-align: left;
             padding-top: 10px;
             padding-bottom: 10px;
-        }
-        #flotLine5  {
-             height: 105px;
-        }
+          }
+          #flotLine5  {
+            height: 105px;
+          }
 
-        #flotBarChart {
+          #flotBarChart {
             height: 150px;
-        }
-        #cellPaiChart{
+          }
+          #cellPaiChart{
             height: 160px;
-        }
+          }
+          .action-buttons a {
+            margin: 0 3px;
+            display: inline-block;
+            opacity: .85;
+            -webkit-transition: all .1s;
+            -o-transition: all .1s;
+            transition: all .1s
+          }
 
+          .action-buttons a:hover {
+            text-decoration: none;
+            opacity: 1;
+            -moz-transform: scale(1.2);
+            -webkit-transform: scale(1.2);
+            -o-transform: scale(1.2);
+            -ms-transform: scale(1.2);
+            transform: scale(1.2)
+          }
+
+          .align-center,
+          .center {
+            text-align: center !important
+          }
+
+          .green {
+            color: #69AA46 !important
+          }
+
+          .bigger-140 {
+            font-size: 140% !important
+          }
+
+          .ace-icon {
+            text-align: center
+          }
+
+          tr.detail-row {
+            display: none
+          }
+
+          tr.detail-row.open {
+            display: block;
+            display: table-row
+          }
+
+          tr.detail-row>td {
+            background-color: #f1f6f8;
+            border-top: 3px solid #d1e1ea !important
+          }
+
+          .table-detail {
+            background-color: #fff;
+            border: 1px solid #dcebf7;
+            width: 100%;
+            padding: 12px
+          }
+
+          .table-detail td>.profile-user-info {
+            width: 100%
+          }
+
+          .table-detail td>.profile-user-info {
+            width: 100%
+          }
+
+          .profile-user-info {
+            display: table;
+            width: 98%;
+            width: calc(100% - 24px);
+            margin: 0 auto
+          }
+
+          .profile-info-row {
+            display: table-row
+          }
+
+          .profile-info-name,
+          .profile-info-value {
+            display: table-cell;
+            border-top: 1px dotted #D5E4F1
+          }
+
+          .profile-info-name {
+            text-align: right;
+            padding: 6px 10px 6px 4px;
+            font-weight: 400;
+            color: #667E99;
+            background-color: transparent;
+            width: 110px;
+            vertical-align: middle
+          }
+
+          .profile-info-value {
+            padding: 6px 4px 6px 6px
+          }
+
+          .profile-info-value>span+span:before {
+            display: inline;
+            content: ",";
+            margin-left: 1px;
+            margin-right: 3px;
+            color: #666;
+            border-bottom: 1px solid #FFF
+          }
+
+          .profile-info-value>span+span.editable-container:before {
+            display: none
+          }
+
+          .profile-info-row:first-child .profile-info-name,
+          .profile-info-row:first-child .profile-info-value {
+            border-top: none
+          }
+
+          .profile-user-info-striped {
+            border: 1px solid #DCEBF7
+          }
+
+          .profile-user-info-striped .profile-info-name {
+            color: #336199;
+            background-color: #EDF3F4;
+            border-top: 1px solid #F7FBFF
+          }
+
+          .profile-user-info-striped .profile-info-value {
+            border-top: 1px dotted #DCEBF7;
+            padding-left: 12px
+          }
+          .zoom {
+            -webkit-transition: all 0.35s ease-in-out;
+            -moz-transition: all 0.35s ease-in-out;
+            transition: all 0.35s ease-in-out;
+            cursor: -webkit-zoom-in;
+            cursor: -moz-zoom-in;
+            cursor: zoom-in;
+          }
+
+          .zoom:hover,
+          .zoom:active,
+          .zoom:focus {
+        /**adjust scale to desired size, 
+        add browser prefixes**/
+        -ms-transform: scale(2.5);
+        -moz-transform: scale(2.5);
+        -webkit-transform: scale(2.5);
+        -o-transform: scale(2.5);
+        transform: scale(2.5);
+        position: relative;
+        z-index: 100;
+        }
     </style>
 </head>
 
@@ -73,24 +222,28 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="menu-item-has-children dropdown mb-3">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion des inscriptions</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ __('dashboard.isc_registrations') }}</a>
                         <ul class="sub-menu children dropdown-menu" style="padding: 0 !important;">
-                            <li><a href="{{ route('dashboard.inscriptions.waiting') }}">Inscriptions non traitées @if($nbr_insc_waiting > 0) <span class="count bg-danger">{{ $nbr_insc_waiting }}</span>@endif</a></li>
+                            <li><a href="{{ route('dashboard.inscriptions.waiting') }}">{{ __('dashboard.isc_waiting') }} @if($nbr_insc_waiting > 0) <span class="count bg-danger">{{ $nbr_insc_waiting }}</span>@endif</a></li>
 
-                            <li><a href="{{ route('dashboard.inscriptions.rejected') }}">Inscriptions rejetées @if($nbr_insc_rejected > 0) <span class="count bg-danger">{{ $nbr_insc_rejected }}</span>@endif</a></li>
-                            <li></i><a href="{{ route('dashboard.inscriptions.valide') }}">Inscriptions validées </a></li>
+                            <li><a href="{{ route('dashboard.inscriptions.rejected') }}">{{ __('dashboard.isc_rejected') }} @if($nbr_insc_rejected > 0) <span class="count bg-danger">{{ $nbr_insc_rejected }}</span>@endif</a></li>
+                            <li></i><a href="{{ route('dashboard.inscriptions.valide') }}">{{ __('dashboard.isc_validated') }} </a></li>
                         </ul>
                     </li>
-                    <li class="mb-3"><a href="ui-cards.html">Cartes d'électeurs disponibles</a></li>
+                    <li class="mb-3"><a href="ui-cards.html">{{ __('dashboard.car_el_dispo') }}</a></li>
                     <li class="menu-item-has-children dropdown mb-3">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion des administrateurs</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ __('dashboard.gest_admins') }}</a>
                         <ul class="sub-menu children dropdown-menu" style="padding: 0 !important;">
-                            <li><a href="ui-badges.html">Ajouter un administrateur</a></li>
-                            <li><a href="ui-buttons.html">Tous les administrateurs</a></li>
+                            <li><a href="{{ route('dashboard.gestionnaires.new') }}">{{ __('dashboard.add_admin') }}</a></li>
+                            <li><a href="{{ route('dashboard.gestionnaires.all') }}">{{ __('dashboard.all_admins') }}</a></li>
                         </ul>
                     </li>
-                    <li class="mb-3"><a href="{{ route('dashboard.logs') }}">Logs du système</a></li>
-                    <li class="mb-3"><a href="{{ route('dashboard.profile') }}">Mon profil</a></li>
+                    <li class="mb-3"><a href="{{ route('dashboard.logs') }}">{{ __('dashboard.system_logs') }}</a></li>
+                    <li class="mb-3"><a href="{{ route('dashboard.profile') }}">{{ __('dashboard.my_profile') }}</a></li>
+                    <hr>
+                    <li>
+                      <a style="width: 8% !important;" href="@if($r_lang==='en') {{ route('lang',['lang'=>$r_lang]) }} @else {{ "#" }} @endif">EN</a> | <a style="width: 8% !important;" href="@if($r_lang==='fr') {{ route('lang',['lang'=>$r_lang]) }} @else {{ "#" }} @endif">FR</a>
+                    </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -185,7 +338,7 @@
 
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="{{ asset('manager/images/admin.jpg') }}" alt="User Avatar">
+                            <img class="user-avatar rounded-circle" src="{{ $admin->profile }}" alt="User Avatar">
                         </a>
 
                         <div class="user-menu dropdown-menu">
@@ -210,6 +363,20 @@
         <!-- /#header -->
         <!-- Content -->
         @yield('content')
+        <div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" alt="" id="showImg">
+                   </div>
+                </div>
+            </div>
+        </div>
         <!-- /.content -->
         <div class="clearfix"></div>
         <!-- Footer -->
@@ -235,25 +402,19 @@
     <script src="{{ asset('manager/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('manager/js/jquery.matchHeight.min.js') }}"></script>
     <script src="{{ asset('manager/js/main.js') }}"></script>
-
     <!--  Chart js -->
     <script src="{{ asset('manager/js/Chart.bundle.min.js') }}"></script>
-
     <!--Chartist Chart-->
     <script src="{{ asset('manager/js/chartist.min.js') }}"></script>
     <script src="{{ asset('manager/js/chartist-plugin-legend.min.js') }}"></script>
-
     <script src="{{ asset('manager/js/jquery.flot.min.js') }}"></script>
     <script src="{{ asset('manager/js/jquery.flot.pie.min.js') }}"></script>
     <script src="{{ asset('manager/js/jquery.flot.spline.min.js') }}"></script>
-
     <script src="{{ asset('manager/js/jquery.simpleWeather.min.js') }}"></script>
     <script src="{{ asset('manager/js/init/weather-init.js') }}"></script>
-
     <script src="{{ asset('manager/js/moment.min.js') }}"></script>
     <script src="{{ asset('manager/js/fullcalendar.min.js') }}"></script>
     <script src="{{ asset('manager/js/init/fullcalendar-init.js') }}"></script>
-
     <script src="{{ asset('manager/js/lib/data-table/datatables.min.js') }}"></script>
     <script src="{{ asset('manager/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ asset('manager/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
@@ -476,12 +637,6 @@
             // Bar Chart #flotBarChart End
         });
 
-    $('.show-details-btn').on('click', function(e) {
-        e.preventDefault();
-        $(this).closest('tr').next().toggleClass('open');
-        $(this).find('.ace-icon').toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
-    });
-
     $('.monForm').submit(function(e){
         e.preventDefault();
         var fa = $(this);
@@ -501,7 +656,20 @@
                     $('#oper').fadeIn().delay(2000).fadeOut();
                     var trObj = $(this).closest("tr");
                     trObj.find(".remo").css('display', 'none');
+
+                    // Petite fonction pour mettre une pause
+                    function sleep (time) {
+                        return new Promise((resolve) => setTimeout(resolve, time));
+                    }
+
+                    // J'appelle la fonction et je recharge la page après la pause
+                    sleep(5000).then(() => {
+                        window.location.reload(); // Je recharge la page actuelle
+                    });
                 }else{
+                    $('#oper').html('<small class=" text-danger">'+response.mesg+'</small>');
+                    $('#oper').fadeIn().delay(2000).fadeOut();
+
                     $('#alert').attr('class', 'alert '+response.type);
                     $('#alert').html(response.mesg);
                     fa[0].reset();

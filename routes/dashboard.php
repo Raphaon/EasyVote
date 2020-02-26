@@ -34,10 +34,13 @@ Route::group(['prefix'=>'inscriptions'], function (){
 		'uses' => "InscriptionsController@rejected",
 		'as' => "dashboard.inscriptions.rejected"
 	]);
-
 	Route::get('inscriptions-valides', [
 		'uses' => "InscriptionsController@valide",
 		'as' => "dashboard.inscriptions.valide"
+	]);
+	Route::get('traitement-inscriptions/{id}', [
+		'uses' => "InscriptionsController@traitement_insc",
+		'as' => "dashboard.inscriptions.traitement_insc"
 	]);
 
 	// On ajoute une route POST pour chacun afin d'envoyer les données pour les tri et filtre
@@ -64,3 +67,23 @@ Route::post('maj-statut-elements', [
 	'as' => "dashboard.inscription.update_statut_elements",
 ]);
 Route::post('load_values', "AjaxController@loadValues"); // chager les régions & departements & communes & bureaux de vote en Ajax
+Route::post('ajouter-matricule-electeur', [
+	'uses' => "InscriptionsController@add_matricule_electeur",
+	'as' => "dashboard.inscription.add_matricule_electeur"
+]);
+
+Route::group(['prefix' => 'gestionnaires'], function(){
+	Route::get('all', [
+		'uses' => 'UsersController@all_dashboard',
+		'as' => 'dashboard.gestionnaires.all',
+	]);
+	Route::get('nouveau-gestionnaire', [
+		'uses' => 'UsersController@new_dashboard',
+		'as' => 'dashboard.gestionnaires.new',
+	]);
+
+	Route::post('nouveau-gestionnaire', [
+		'uses' => 'UsersController@save_dashboard',
+		'as' => 'dashboard.gestionnaires.save',
+	]);
+});

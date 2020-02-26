@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CarteDeVote extends Model
 {
     protected $fillable = [
-    	'imgRecto', 'imgVerso', 'dateDeliv', 'compteARebours', 'statut', 'personne_id', 'statutCarte',
+    	'imgRecto', 'imgVerso', 'dateDeliv', 'compteARebours', 'statut', 'electeur_id', 'statutCarte',
     ];
 
     protected $hidden = [

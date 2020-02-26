@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'priority',
+        'name', 'email', 'password', 'priority', 'profile_img',
     ];
 
     /**
@@ -27,4 +27,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getProfileAttribute(){
+        return asset('manager/images/'.$this->profile_img);
+    }
 }
