@@ -4,28 +4,32 @@ namespace App\Http\Controllers;
 
 use App;
 use Session;
-use Illuminate\Http\Request;
 
-class HomeController extends Controller
-{
-    public function __construct()
-    {
-    }
+class HomeController extends Controller {
+	public function __construct() {
+	}
 
-    public function index()
-    {
-        return view('welcome');
-    }
+	public function index() {
+		return view('welcome');
+	}
 
-    public function change_language($lang){
-        $l = App::getLocale();
-        Session::put('locale', $lang);
+	public function welcome() {
+		$data = [
+			'statusCode' => 200,
+			'body' => "kala kala",
+		];
+		echo json_encode($data);
+	}
 
-        if($l === $lang){
-            return redirect()->back();
-        }
-        App::setLocale($lang);
+	public function change_language($lang) {
+		$l = App::getLocale();
+		Session::put('locale', $lang);
 
-        return redirect()->back();
-    }
+		if ($l === $lang) {
+			return redirect()->back();
+		}
+		App::setLocale($lang);
+
+		return redirect()->back();
+	}
 }
