@@ -17,18 +17,6 @@ class DashboardController extends Controller
     }
 
     /**
-     * Afficher les logs qu'un gérant d'Elecam peut voir
-     */
-    public function logs(){
-    	$data = [
-    		'title' => "Logs du système - ELECAM",
-    		'logs' => App\Log::where("level", '<>', Constants::ADMINLOGSLEVEL)->orderBy('action_time', 'desc')->get(),
-    	];
-
-    	return view("dashboard.logs", $data);
-    }
-
-    /**
      * Gestion du profile du gérant d'élécam
      */
     public function profile(){

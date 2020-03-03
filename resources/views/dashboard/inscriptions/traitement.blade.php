@@ -12,6 +12,7 @@
                     </div>
                     <div class="form-group col-sm-7 col-lg-7 col-md-7 col-7">
                         <form action="{{ route('dashboard.inscription.update_statut_process') }}" method="POST" class="monForm">
+                            {{-- @csrf --}}
                             <input required type="hidden" name="id" value="{{ $inscription->id }}">
                             <select name="statut" class="status custom-select col-md-5" required>
                                 <option value="">Choisir l'état du dossier</option>
@@ -26,7 +27,7 @@
             </div>
             @if($inscription->statut_process=='2')
             <div class="card-body card-block" style="border: 2px solid #dee2e6!important">
-                <form action="{{ route('dashboard.inscription.add_matricule_electeur') }}" method="POST" class="monForm" class="form-horizontal">
+                <form action="{{ route('dashboard.inscription.add_carte_electeur') }}" method="POST" class="monForm" class="form-horizontal">
                     <div class="row form-group">
                         <strong>Informations supplémentaires ..</strong>
                         <input required type="hidden" name="personne_id" value="{{ $inscription->id }}">
@@ -38,6 +39,14 @@
                         <div class="col-6">
                             Date de Délivrance de la carte d'électeur <input type="date" name="date_deliv" class="form-control"
                             value="<?php if(!is_null(@$inscription->electeur->carteDeVote->dateDeliv)){ echo(date('Y-m-d', @$inscription->electeur->carteDeVote->dateDeliv)); } ?>" required min="<? date('Y-m-d', time()) ?>">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-6">
+                            Image recto - Carte d'electeur <input type="file" name="cdv_recto" class="form-control" required accept="image/*">
+                        </div>
+                        <div class="col-6">
+                            Image verso- Carte d'electeur <input type="file" name="cdv_verso" class="form-control" required accept="image/*">
                         </div>
                     </div>
                     <input type="submit" value="confirm" class="btn btn-danger btn-sm remo pull-right">

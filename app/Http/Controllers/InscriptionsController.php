@@ -108,7 +108,7 @@ class InscriptionsController extends Controller
      * Ajouter le matricule d'un électeur et éventuellement créer sa carte de vote
      * @param [Request] $request : Paramètre soumis en POST lors de la soummission du form
      */
-    public function add_matricule_electeur(Request $request){
+    public function add_carte_electeur(Request $request){
         $this->validate($request, [
             'personne_id' => 'required',
             'matricule' => "required",
@@ -180,28 +180,61 @@ class InscriptionsController extends Controller
         extract($_POST); // Pour faciliter l'utilisation des variables
 
         $person_to_update = Personne::find($id);
+        $statut_elements = unserialize($person_to_update->statut_elements);
 
         if($statut == 1){
-            // On effectue le update
-            $person_to_update->update(['statut_process'=>Constants::REJECTEDINSCRIPTION])['values'];
+            /**
+             * !!! D'abord vérifier qu'il y'a au moins un champ rejeté ... !!!
+             */
+            if($statut_elements){
+                $cpt=0;
+                // Si on trouve UNE SEULE info rejetée ça nous va ... sinon pourquoi rejeter le dossier ? Conclusion on refuse
+                foreach ($statut_elements as $el) {
+                    if(strstr($el, '_refuse')){
+                        $cpt++; // Pour la suite
 
-            // Puis on enregistre le log
-            App\Log::create([
-                'user_id' => Auth::user()->id,
-                'action' => "REJECT INSCRIPTION de <strong>". ucwords($personne->nom) ." " . ucwords($personne->prenom) ."(CNI : ".$personne->numCNI.")</strong>",
-                'action_time' => time(),
-                'level' => Constants::MANAGERLOGSLEVEL, // c-a-d c'est un gérant d'Elecam qui a éffectué l'action
-            ]);
+                        // On effectue le update
+                        $person_to_update->update(['statut_process'=>Constants::REJECTEDINSCRIPTION]);
 
-            $data = [
-                'status'=>"danger",
-                'mesg' => "Dossier rejeté avec succès !",
-            ];
+
+                        // Puis on enregistre le log
+                        App\Log::create([
+                            'user_id' => Auth::user()->id,
+                            'action' => "REJECT INSCRIPTION de <strong>". ucwords($person_to_update->nom) ." " . ucwords($person_to_update->prenom) ."(CNI : ".$person_to_update->numCNI.")</strong>",
+                            'action_time' => time(),
+                            'level' => Constants::MANAGERLOGSLEVEL, // c-a-d c'est un gérant d'Elecam qui a éffectué l'action
+                        ]);
+
+                        $data = [
+                            'status'=>"danger",
+                            'mesg' => "Dossier rejeté avec succès !",
+                        ];
+
+                        echo json_encode($data);
+                        exit(); // Vu qu'il y'a d'autres blocs de code après cette ligne
+                    }
+
+                }
+                if($cpt==0){ //ie on a aucune info rejetée ... On ne rejette donc pas aussi le dossier .
+                    $data = [
+                        'mesg' => "Bien vouloir rejeter au moins une information.",
+                    ];
+
+                    echo json_encode($data);
+                    exit(); // Vu qu'il y'a d'autres blocs de code après cette ligne
+                }
+            }else{
+                $data = [
+                    'mesg' => "Bien vouloir sélectionner les informations à rejeter.",
+                ];
+
+                echo json_encode($data);
+                exit(); // Vu qu'il y'a d'autres blocs de code après cette ligne
+            }
         }elseif($statut == 2){
             /**
              * !!! TOUT D'ABORD S'ASSURER QUE TOUS LES CHAMPS ONT BIEN ÉTÉ VALIDÉS !!!
              */
-            $statut_elements = unserialize($person_to_update->statut_elements);
             if($statut_elements){
                 foreach ($statut_elements as $el) {
                     // SI AU MOINS un champ n'est pas accepté, on fait riaaaan !
@@ -215,7 +248,8 @@ class InscriptionsController extends Controller
                     }
                 }
             }
-            if(!$statut_elements){ // si il n'a même pas encore check on le chasse .. pian !
+            // if(!$statut_elements){ // si il n'a même pas encore check on le chasse .. pian !
+            else{ // si il n'a même pas encore check on le chasse .. pian !
                 $data = [
                     'mesg' => "Valider premièrement toutes les informations d'inscription",
                 ];
