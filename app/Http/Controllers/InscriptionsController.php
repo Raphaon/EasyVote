@@ -242,7 +242,7 @@ class InscriptionsController extends Controller
             // Puis on enregistre le log
             App\Log::create([
                 'user_id' => Auth::user()->id,
-                'action' => "VALIDATION INSCRIPTION de <strong>". ucwords($personne->nom) ." " . ucwords($personne->prenom) ."(CNI : ".$personne->numCNI.")</strong>",
+                'action' => "VALIDATION INSCRIPTION de <strong>". ucwords($person_to_update->nom) ." " . ucwords($person_to_update->prenom) ."(CNI : ".$person_to_update->numCNI.")</strong>",
                 'action_time' => time(),
                 'level' => Constants::MANAGERLOGSLEVEL, // c-a-d c'est un gérant d'Elecam qui a éffectué l'action
             ]);
