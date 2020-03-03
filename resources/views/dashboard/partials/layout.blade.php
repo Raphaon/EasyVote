@@ -238,7 +238,6 @@
                             <li><a href="{{ route('dashboard.gestionnaires.all') }}">{{ __('dashboard.all_admins') }}</a></li>
                         </ul>
                     </li>
-                    <li class="mb-3"><a href="{{ route('dashboard.logs') }}">{{ __('dashboard.system_logs') }}</a></li>
                     <li class="mb-3"><a href="{{ route('dashboard.profile') }}">{{ __('dashboard.my_profile') }}</a></li>
                     <hr>
                     <li>

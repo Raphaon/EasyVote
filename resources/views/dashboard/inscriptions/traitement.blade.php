@@ -12,6 +12,7 @@
                     </div>
                     <div class="form-group col-sm-7 col-lg-7 col-md-7 col-7">
                         <form action="{{ route('dashboard.inscription.update_statut_process') }}" method="POST" class="monForm">
+                            {{-- @csrf --}}
                             <input required type="hidden" name="id" value="{{ $inscription->id }}">
                             <select name="statut" class="status custom-select col-md-5" required>
                                 <option value="">Choisir l'état du dossier</option>

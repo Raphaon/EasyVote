@@ -14,10 +14,6 @@ Route::get('/', [
 	'uses' => 'DashboardController@index',
 	'as' => "dashboard.index",
 ]);
-Route::get('/logs', [
-	'uses' => 'DashboardController@logs',
-	'as' => "dashboard.logs",
-]);
 Route::get('/profile', [
 	'uses' => 'DashboardController@profile',
 	'as' => "dashboard.profile",
