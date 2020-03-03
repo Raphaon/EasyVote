@@ -64,8 +64,8 @@ Route::post('maj-statut-elements', [
 ]);
 Route::post('load_values', "AjaxController@loadValues"); // chager les régions & departements & communes & bureaux de vote en Ajax
 Route::post('ajouter-matricule-electeur', [
-	'uses' => "InscriptionsController@add_matricule_electeur",
-	'as' => "dashboard.inscription.add_matricule_electeur"
+	'uses' => "InscriptionsController@add_carte_electeur",
+	'as' => "dashboard.inscription.add_carte_electeur"
 ]);
 
 Route::group(['prefix' => 'gestionnaires'], function(){
