@@ -12,7 +12,6 @@
                     </div>
                     <div class="form-group col-sm-7 col-lg-7 col-md-7 col-7">
                         <form action="{{ route('dashboard.inscription.update_statut_process') }}" method="POST" class="monForm">
-                            {{-- @csrf --}}
                             <input required type="hidden" name="id" value="{{ $inscription->id }}">
                             <select name="statut" class="status custom-select col-md-5" required>
                                 <option value="">Choisir l'état du dossier</option>
@@ -27,27 +26,40 @@
             </div>
             @if($inscription->statut_process=='2')
             <div class="card-body card-block" style="border: 2px solid #dee2e6!important">
-                <form action="{{ route('dashboard.inscription.add_carte_electeur') }}" method="POST" class="monForm" class="form-horizontal">
+                <form action="{{ route('dashboard.inscription.add_carte_electeur') }}" method="POST" class="monForm" class="form-horizontal" enctype="multipart/form-data">
                     <div class="row form-group">
                         <strong>Informations supplémentaires ..</strong>
                         <input required type="hidden" name="personne_id" value="{{ $inscription->id }}">
                     </div>
                     <div class="row form-group">
-                        <div class="col-6">
+                        <div class="col-4">
                             Matricule de l'électeur <input type="text" name="matricule" class="form-control" required value="{{ @$inscription->electeur->matricule }}" >
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             Date de Délivrance de la carte d'électeur <input type="date" name="date_deliv" class="form-control"
                             value="<?php if(!is_null(@$inscription->electeur->carteDeVote->dateDeliv)){ echo(date('Y-m-d', @$inscription->electeur->carteDeVote->dateDeliv)); } ?>" required min="<? date('Y-m-d', time()) ?>">
+                        </div>
+                        <div class="col-4">
+                            Carte d'électeur disponible ?
+                            <select name="statut_cdv" class="form-control" required="">
+                                <option value="">...</option>
+                                <option value="0" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='0') selected @endif>Pas encore</option>
+                                <option value="2" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='2') selected @endif>Carte disponible</option>
+                                <option value="3" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='3') selected @endif>Carte déjà retirée</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-6">
-                            Image recto - Carte d'electeur <input type="file" name="cdv_recto" class="form-control" required accept="image/*">
+                            Image recto - Carte d'electeur <input type="file" name="cdv_recto" id="featured_recto" class="form-control">
                         </div>
                         <div class="col-6">
-                            Image verso- Carte d'electeur <input type="file" name="cdv_verso" class="form-control" required accept="image/*">
+                            Image verso- Carte d'electeur <input type="file" name="cdv_verso" id="featured_verso" class="form-control">
                         </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-6 view_r">@if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->imgRecto != '') <img src="{{ $inscription->electeur->carteDeVote->getcdvRectoAttribute() }}" alt=""> @endif</div>
+                        <div class="col-6 view_v">@if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->imgVerso != '') <img src="{{ $inscription->electeur->carteDeVote->getcdvVersoAttribute() }}" alt=""> @endif</div>
                     </div>
                     <input type="submit" value="confirm" class="btn btn-danger btn-sm remo pull-right">
                 </form>

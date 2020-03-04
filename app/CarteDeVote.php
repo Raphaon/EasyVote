@@ -17,4 +17,12 @@ class CarteDeVote extends Model
     public function electeur(){
     	return $this->belongsTo("App\Electeur");
     }
+
+    public function getcdvRectoAttribute(){
+        return asset("uploads/cdv/".$this->imgRecto);
+    }
+
+    public function getcdvVersoAttribute(){
+        return asset("uploads/cdv/".$this->imgVerso);
+    }
 }

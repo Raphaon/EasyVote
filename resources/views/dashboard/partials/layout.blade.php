@@ -638,17 +638,20 @@
 
     $('.monForm').submit(function(e){
         e.preventDefault();
-        var fa = $(this);
+        var form_data = new FormData($(this)[0]);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            url: fa.attr('action'),
+            url: $(this).attr('action'),
             type: 'post' ,
-            data: fa.serialize(),
+            data: form_data,
             dataType: 'json',
+            cache: false,
+            processData: false,
+            contentType: false,
             success: function(response) {
                 if(response.status){
                     $('#oper').html('<small class=" text-'+response.status+'">'+response.mesg+'</small>');
@@ -671,7 +674,7 @@
 
                     $('#alert').attr('class', 'alert '+response.type);
                     $('#alert').html(response.mesg);
-                    fa[0].reset();
+                    $(this)[0].reset();
                 }
             }
         });
@@ -786,6 +789,43 @@
         if(type_filter != "" && value_filter != ""){
             $("#filterByForm").submit();
         }
+    });
+
+    // Sauvegarder les images et afficher un aperçu
+
+    $(document).on('change', "#featured_recto,#featured_verso", function(){
+      var params = new FormData();
+      var clickedEl = $(this).attr('id');
+      var fileField = document.querySelector("#"+clickedEl);
+
+      params.append('img', fileField.files[0]);
+      event.preventDefault();
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+      $.ajax({
+        url: "{{ asset('dashboard/load-image') }}",
+        method:'POST',
+        type: 'POST',
+        data: params,
+        dataType : 'JSON',
+        contentType: false,
+        processData: false,
+        success: function(response) {
+
+          if(clickedEl == 'featured_recto'){
+            var searchedClass = "view_r";
+          }else if(clickedEl == 'featured_verso'){
+            var searchedClass = "view_v";
+          }
+
+          var imglinkresponse = document.querySelector('.'+searchedClass);
+          var content = "<img src='"+response.image+"' alt=''>";
+          imglinkresponse.innerHTML = content;
+        }
+      });
     });
     </script>
 </body>

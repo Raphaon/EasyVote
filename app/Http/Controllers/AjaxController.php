@@ -68,4 +68,18 @@ class AjaxController extends Controller
 
 		echo json_encode($data); // Et on balance la soupe ..
 	}
+
+	public function loadImage(Request $request)
+    {
+        $featured = $request->img;
+        $featured_new_name = time() . $featured->getClientOriginalName();
+        $featured->move('uploads/cdv/', $featured_new_name);
+
+        $data = [
+        	'status' => "ok",
+        	'image' => asset('uploads/cdv/'.$featured_new_name),
+        ];
+
+        echo json_encode($data);
+    }
 }

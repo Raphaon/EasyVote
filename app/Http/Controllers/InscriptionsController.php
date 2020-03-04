@@ -113,11 +113,12 @@ class InscriptionsController extends Controller
             'personne_id' => 'required',
             'matricule' => "required",
             'date_deliv' => "required",
+            'statut_cdv' => "required",
         ]);
 
         // On aura besoin de certaines informations de cette personne
         $personne = App\Personne::find($request->personne_id);
-        // Enregistrer le matricule (App\Electeur). Donc on fais un update sur lui
+        // Enregistrer le matricule (App\Electeur). Donc on fait un update sur lui
 
         $electeur = App\Electeur::where('personne_id', $request->personne_id)->first(); // On est pas supposé en avoir 2 de toute façon ..
         $electeur->update([
@@ -133,22 +134,46 @@ class InscriptionsController extends Controller
         ]);
 
         // Créer la carte_de_vote si elle n'existe pas encore
-        $carte_de_vote = App\CarteDeVote::where('electeur_id', $request->personne_id)->first();
+        $carte_de_vote = App\CarteDeVote::where('electeur_id', $electeur->id)->first();
+
         if(is_null($carte_de_vote)){
             $carte_de_vote = App\CarteDeVote::create([
-                'electeur_id' => $request->personne_id,
+                'electeur_id' => $electeur->id,
                 'dateDeliv' => strtotime($request->date_deliv),
-                'statut' => Constants::CARDNOTAVAILABLE
+                'statut' => '0', // euhhhh T'ES QUI TOI ???????
+                'statutCarte' => $request->statut_cdv,
             ]);
 
             $action = "CREATION CARTE_ELECTEUR";
         }else{ // Si la carte existe déjà on fait juste un update ..
             $carte_de_vote->update([
+                'electeur_id' => $electeur->id,
                 'dateDeliv' => strtotime($request->date_deliv),
-                'statut' => Constants::CARDNOTAVAILABLE, // Comment ceci change ?????????
+                'statut' => '0', // euhhhh T'ES QUI TOI ???????
+                'statutCarte' => $request->statut_cdv,
             ]);
 
             $action = "MODIFICATION CARTE_ELECTEUR";
+        }
+
+        // On récupère les img recto&verso de la carte de vote si elles sont POSTées et on fait le update de la cdv
+        $dossier = 'uploads/cdv/';
+        // j'upload l'image si elle a été soumise
+        if(!is_null($request->cdv_recto)){
+            $featured_recto = $request->cdv_recto;
+            $featured_new_recto = time() . $featured_recto->getClientOriginalName();
+            $featured_recto->move($dossier, $featured_new_recto);
+            $carte_de_vote->update([
+                'imgRecto' => $featured_new_recto,
+            ]);
+        }
+        if(!is_null($request->cdv_verso)){
+            $featured_verso = $request->cdv_verso;
+            $featured_new_verso = time() . $featured_verso->getClientOriginalName();
+            $featured_verso->move($dossier, $featured_new_verso);
+            $carte_de_vote->update([
+                'imgVerso' => $featured_new_verso,
+            ]);
         }
 
         // Puis on enregistre le log ..

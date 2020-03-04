@@ -83,3 +83,5 @@ Route::group(['prefix' => 'gestionnaires'], function(){
 		'as' => 'dashboard.gestionnaires.save',
 	]);
 });
+
+Route::post('load-image', "AjaxController@loadImage"); // chager les régions & departements & communes & bureaux de vote en Ajax
