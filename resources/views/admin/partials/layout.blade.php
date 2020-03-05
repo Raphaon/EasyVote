@@ -47,7 +47,6 @@
                             <li></i><a href="{{ route('admin.bureau_de_vote.all') }}">Bureaux de vote</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Cartes d'électeurs disponibles</a></li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion des administrateurs</a>
                         <ul class="sub-menu children dropdown-menu">

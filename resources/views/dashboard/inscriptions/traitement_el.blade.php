@@ -11,12 +11,14 @@
                         <span id="oper"></span>
                     </div>
                     <div class="form-group col-sm-7 col-lg-7 col-md-7 col-7">
-                        <form action="{{ route('dashboard.inscription.update_statut_process') }}" method="POST" class="monForm">
+                        Carte d'électeur disponible ?
+                        <form action="{{ route('dashboard.inscription.update_statutCarte') }}" method="POST" class="monForm">
                             <input required type="hidden" name="id" value="{{ $inscription->id }}">
-                            <select name="statut" class="status custom-select col-md-5" required>
-                                <option value="">Choisir l'état du dossier</option>
-                                <option value="1" @if($inscription->statut_process=='1') selected @endif >Rejeté</option>
-                                <option value="2" @if($inscription->statut_process=='2') selected @endif>Validé</option>
+                            <select name="statutCarte" class="status custom-select col-md-5" required>
+                                <option value="">Carte d'électeur disponible ?</option>
+                                <option value="0" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='0') selected @endif>Pas encore</option>
+                                <option value="2" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='2') selected @endif>Carte disponible</option>
+                                <option value="3" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='3') selected @endif>Carte déjà retirée</option>
                             </select>
                             <input required type="hidden" name="action" value="accound">
                             <input type="submit" value="confirm" class="btn btn-danger btn-sm remo">
@@ -24,53 +26,12 @@
                     </div>
                 </div>
             </div>
-            @if($inscription->statut_process=='2')
-            <div class="card-body card-block" style="border: 2px solid #dee2e6!important">
-                <form action="{{ route('dashboard.inscription.add_carte_electeur') }}" method="POST" class="monForm" class="form-horizontal" enctype="multipart/form-data">
-                    <div class="row form-group">
-                        <strong>Informations supplémentaires ..</strong>
-                        <input required type="hidden" name="personne_id" value="{{ $inscription->id }}">
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-6">
-                            Matricule de l'électeur <input type="text" name="matricule" class="form-control" required value="{{ @$inscription->electeur->matricule }}" >
-                        </div>
-                        <div class="col-6">
-                            Date de Délivrance de la carte d'électeur <input type="date" name="date_deliv" class="form-control"
-                            value="<?php if(!is_null(@$inscription->electeur->carteDeVote->dateDeliv)){ echo(date('Y-m-d', @$inscription->electeur->carteDeVote->dateDeliv)); } ?>" required min="<? date('Y-m-d', time()) ?>">
-                        </div>
-                        {{-- <div class="col-4">
-                            Carte d'électeur disponible ?
-                            <select name="statut_cdv" class="form-control" required="">
-                                <option value="">...</option>
-                                <option value="0" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='0') selected @endif>Pas encore</option>
-                                <option value="2" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='2') selected @endif>Carte disponible</option>
-                                <option value="3" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='3') selected @endif>Carte déjà retirée</option>
-                            </select>
-                        </div> --}}
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-6">
-                            Image recto - Carte d'electeur <input type="file" name="cdv_recto" id="featured_recto" class="form-control">
-                        </div>
-                        <div class="col-6">
-                            Image verso- Carte d'electeur <input type="file" name="cdv_verso" id="featured_verso" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-6 view_r">@if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->imgRecto != '') <img src="{{ $inscription->electeur->carteDeVote->getcdvRectoAttribute() }}" alt=""> @endif</div>
-                        <div class="col-6 view_v">@if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->imgVerso != '') <img src="{{ $inscription->electeur->carteDeVote->getcdvVersoAttribute() }}" alt=""> @endif</div>
-                    </div>
-                    <input type="submit" value="confirm" class="btn btn-danger btn-sm remo pull-right">
-                </form>
-            </div>
-            @endif
         </div>
         <div class="card-body">
             <div class="row col m-2 h4">
                 Informations de l'inscrit
             </div>
-            <form action="{{ route('dashboard.inscription.update_statut_elements') }}" method="post" accept-charset="utf-8" class="reseau">
+            <form action="#" method="post">
                 <div class="table-detail">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
@@ -243,10 +204,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-5">
-                            <div class="profile-user-info profile-user-info-striped">
                                 <div class="profile-info-row">
                                     <div class="profile-info-name">Numéro CNI</div>
 
@@ -296,6 +253,10 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-5">
+                            <div class="profile-user-info profile-user-info-striped">
                                 <div class="profile-info-row">
                                     <div class="profile-info-name">Telephone</div>
 
@@ -338,6 +299,31 @@
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
                                                 <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"photocniRecto", "_refuse") }} name="photocniRecto" value="cniPhoto_refuse">refuse
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name">Commune</div>
+
+                                    <div class="profile-info-value">
+                                        <span>{{ $inscription->commune->nomCom }}</span>
+                                    </div>
+                                    <div class="checkbox-radios">
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"commune_id") }} name="commune_id" value="{{ $inscription->commune->id }}">accept
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"commune_id", "_refuse") }} name="commune_id" value="mobile_refuse">refuse
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
                                                 </span>
@@ -394,37 +380,21 @@
                                     </div>
                                 </div>
                                 <div class="profile-info-row">
-                                    <div class="profile-info-name">Commune</div>
-
-                                    <div class="profile-info-value">
-                                        <span>{{ $inscription->commune->nomCom }}</span>
+                                    <div class="profile-info-name">Recto de la carte de vote</div>
+                                    <div class="profile-info-value text-center" style="vertical-align: middle;">
+                                        <button type="button" data-toggle="modal" data-target="#staticModal" data-image="{{ asset($inscription->electeur->carteDeVote->getcdvRectoAttribute()) }}" class="btn btn-link showImgModal">Voir l'image</button>
                                     </div>
-                                    <div class="checkbox-radios">
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"commune_id") }} name="commune_id" value="{{ $inscription->commune->id }}">accept
-                                                <span class="form-check-sign">
-                                                    <span class="check"></span>
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input required class="form-check-input" type="radio" {{ is_valider($inscription->statut_elements,"commune_id", "_refuse") }} name="commune_id" value="mobile_refuse">refuse
-                                                <span class="form-check-sign">
-                                                    <span class="check"></span>
-                                                </span>
-                                            </label>
-                                        </div>
+                                </div>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name">Verso de la carte de vote</div>
+                                    <div class="profile-info-value text-center" style="vertical-align: middle;">
+                                        <button type="button" data-toggle="modal" data-target="#staticModal" data-image="{{ asset($inscription->electeur->carteDeVote->getcdvVersoAttribute()) }}" class="btn btn-link showImgModal">Voir l'image</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-1">
                             <div class="row">
-                                <input required type="hidden" name="id_user" value="{{ $inscription->id }}">
-                                <div id="rep2" class="col-sm-12"></div>
-                                <button class="pull-right btn btn-sm btn-primary btn-round" type="submit" name="send">Sauvegarder</button>
                                 <a href="{{ $route_back }}" class="pull-right btn btn-sm btn-danger btn-round mt-4">Annuler</a>
                             </div>
                         </div>

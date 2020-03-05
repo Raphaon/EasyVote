@@ -230,7 +230,7 @@
                             <li></i><a href="{{ route('dashboard.inscriptions.valide') }}">{{ __('dashboard.isc_validated') }} </a></li>
                         </ul>
                     </li>
-                    <li class="mb-3"><a href="ui-cards.html">{{ __('dashboard.car_el_dispo') }}</a></li>
+                    <li><a href="{{ route('dashboard.inscriptions.all_cdv') }}">Cartes d'électeurs disponibles</a></li>
                     <li class="menu-item-has-children dropdown mb-3">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ __('dashboard.gest_admins') }}</a>
                         <ul class="sub-menu children dropdown-menu" style="padding: 0 !important;">

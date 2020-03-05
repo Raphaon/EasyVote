@@ -11,12 +11,12 @@
 	                <div class="card-body">
 	                    <div class="stat-widget-five">
 	                        <div class="stat-icon dib flat-color-1">
-	                            <i class="pe-7s-cash"></i>
+	                            <i class="pe-7s-folder"></i>
 	                        </div>
 	                        <div class="stat-content">
 	                            <div class="text-left dib">
-	                                <div class="stat-text">$<span class="count">23569</span></div>
-	                                <div class="stat-heading">Revenue</div>
+	                                <div class="stat-text"><span class="count">{{ $nbr_insc_total }}</span></div>
+	                                <div class="stat-heading">Total d'inscrits</div>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -29,12 +29,12 @@
 	                <div class="card-body">
 	                    <div class="stat-widget-five">
 	                        <div class="stat-icon dib flat-color-2">
-	                            <i class="pe-7s-cart"></i>
+	                            <i class="pe-7s-folder"></i>
 	                        </div>
 	                        <div class="stat-content">
 	                            <div class="text-left dib">
-	                                <div class="stat-text"><span class="count">3435</span></div>
-	                                <div class="stat-heading">Sales</div>
+	                                <div class="stat-text"><span class="count">{{ $nbr_insc_rejected }}</span></div>
+	                                <div class="stat-heading">Dossiers rejetés</div>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -47,12 +47,12 @@
 	                <div class="card-body">
 	                    <div class="stat-widget-five">
 	                        <div class="stat-icon dib flat-color-3">
-	                            <i class="pe-7s-browser"></i>
+	                            <i class="pe-7s-folder"></i>
 	                        </div>
 	                        <div class="stat-content">
 	                            <div class="text-left dib">
-	                                <div class="stat-text"><span class="count">349</span></div>
-	                                <div class="stat-heading">Templates</div>
+	                                <div class="stat-text"><span class="count">{{ $nbr_insc_valide }}</span></div>
+	                                <div class="stat-heading">Dossiers validés</div>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -69,8 +69,8 @@
 	                        </div>
 	                        <div class="stat-content">
 	                            <div class="text-left dib">
-	                                <div class="stat-text"><span class="count">2986</span></div>
-	                                <div class="stat-heading">Clients</div>
+	                                <div class="stat-text"><span class="count">{{ $nbr_gerants }}</span></div>
+	                                <div class="stat-heading">Nombre de gérants</div>
 	                            </div>
 	                        </div>
 	                    </div>

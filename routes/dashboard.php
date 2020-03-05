@@ -18,6 +18,18 @@ Route::get('/profile', [
 	'uses' => 'DashboardController@profile',
 	'as' => "dashboard.profile",
 ]);
+Route::get('/cartes-de-vote-disponible', [
+	'uses' => 'InscriptionsController@show_ava_cdv',
+	'as' => "dashboard.inscriptions.all_cdv",
+]);
+Route::get('traitement-electeurs/{id}', [
+	'uses' => "InscriptionsController@traitement_el",
+	'as' => "dashboard.inscriptions.traitement_el"
+]);
+Route::post('changer-statut-carte-de-vote', [
+	'uses' => "InscriptionsController@update_statutCarte",
+	'as' => "dashboard.inscription.update_statutCarte"
+]);
 
 
 // Groupe de routes pour la gestion des inscriptions

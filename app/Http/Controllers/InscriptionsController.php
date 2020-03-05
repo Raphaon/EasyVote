@@ -84,6 +84,21 @@ class InscriptionsController extends Controller
     }
 
     /**
+     * Afficher les détails concernant tous les électeurs (NB: inscrit # electeur)
+     */
+    public function show_ava_cdv(){
+        $inscs = App\Electeur::all();
+        // $inscs = Personne::where("statut_process",Constants::VALIDEINSCRIPTION)->orderBy("date_inscription")->get();
+
+        $data = [
+            'title' => "Cartes d'Electeurs disponibles - ELECAM",
+            'electeurs' => $inscs,
+        ];
+
+        return view("dashboard.inscriptions.cdv", $data);
+    }
+
+    /**
      * Page qui va montrer plus en détail les infos d'inscription pour le traitement
      * @param [int] $id : id de la personne en question
      */
@@ -105,6 +120,26 @@ class InscriptionsController extends Controller
     }
 
     /**
+     * Gestion des infos des electeurs
+     */
+    public function traitement_el($id){
+        $inscription = App\Personne::find($id);
+
+        // Si l'électeur n'existe pas on le chasse de cette page ... 
+        if(is_null($inscription->electeur)){
+            return redirect()->back();
+        }
+
+        $data = [
+            'title' => "Traitement d'inscription - ELECAM",
+            'inscription' => $inscription,
+            'route_back' => redirect()->back()->getTargetUrl(),
+        ];
+
+        return view("dashboard.inscriptions.traitement_el", $data);
+    }
+
+    /**
      * Ajouter le matricule d'un électeur et éventuellement créer sa carte de vote
      * @param [Request] $request : Paramètre soumis en POST lors de la soummission du form
      */
@@ -113,7 +148,7 @@ class InscriptionsController extends Controller
             'personne_id' => 'required',
             'matricule' => "required",
             'date_deliv' => "required",
-            'statut_cdv' => "required",
+            // 'statut_cdv' => "required",
         ]);
 
         // On aura besoin de certaines informations de cette personne
@@ -141,7 +176,7 @@ class InscriptionsController extends Controller
                 'electeur_id' => $electeur->id,
                 'dateDeliv' => strtotime($request->date_deliv),
                 'statut' => '0', // euhhhh T'ES QUI TOI ???????
-                'statutCarte' => $request->statut_cdv,
+                'statutCarte' => Constants::CARDNOTAVAILABLE, // valeur modifiable au niveau de cartes-de-vote-disponibles
             ]);
 
             $action = "CREATION CARTE_ELECTEUR";
@@ -150,7 +185,7 @@ class InscriptionsController extends Controller
                 'electeur_id' => $electeur->id,
                 'dateDeliv' => strtotime($request->date_deliv),
                 'statut' => '0', // euhhhh T'ES QUI TOI ???????
-                'statutCarte' => $request->statut_cdv,
+                'statutCarte' => Constants::CARDNOTAVAILABLE, // valeur modifiable au niveau de cartes-de-vote-disponibles
             ]);
 
             $action = "MODIFICATION CARTE_ELECTEUR";
@@ -425,5 +460,54 @@ class InscriptionsController extends Controller
         $retour['values'] = $inscs;
 
         return $retour; //array
+    }
+
+    public function update_statutCarte(Request $request){
+        $this->validate($request, [
+            'id' => 'required',
+            'statutCarte' => 'required',
+        ]);
+
+        $personne = Personne::find($request->id);
+        $cdv = App\CarteDeVote::find($personne->electeur->carteDeVote->id);
+
+
+        if(is_null($cdv)){
+            $data = [
+                'success' => false,
+                'status' => "danger",
+                'mesg' => "La Carte d'électeur de cet utilisateur est introuvable.",
+            ];
+
+            echo json_encode($data);
+            exit();
+        }
+
+        // On doit now trouver l'électeur pour faire le update
+
+        if($cdv->update(['statutCarte' => $request->statutCarte])){
+            $data = [
+                'success' => true,
+                'status' => "success",
+                'mesg' => "ok!",
+            ];
+        }else{
+            $data = [
+                'success' => false,
+                'status' => "danger",
+                'mesg' => "erreur",
+            ];
+        }
+
+        // Puis on enregistre le log
+            App\Log::create([
+                'user_id' => Auth::user()->id,
+                'action' => "MISE À JOUR DU STATUT DE LA CARTE D'ELECTEUR de <strong>". ucwords($personne->nom) ." " . ucwords($personne->prenom) ."(CNI : ".$personne->numCNI.")</strong>",
+                'action_time' => time(),
+                'level' => Constants::MANAGERLOGSLEVEL, // c-a-d c'est un gérant d'Elecam qui a éffectué l'action
+            ]);
+
+        echo json_encode($data);
+
     }
 }
