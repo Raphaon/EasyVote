@@ -176,4 +176,6 @@ return [
         'available'             => 'disponible',
         'size'                  => 'taille',
     ],
+
+    'hashmatch' => "Votre mot de passe actuel doit correspondre au mot de passe de votre compte.",
 ];

@@ -396,7 +396,8 @@
     <!-- /#right-panel -->
 
     <!-- Scripts -->
-    <script src="{{ asset('manager/js/jquery-2.1.4.min.js') }}"></script>
+    {{-- <script src="{{ asset('manager/js/jquery-2.1.4.min.js') }}"></script> --}}
+    <script src="{{ asset('manager/js/jquery.min.js') }}"></script>
     <script src="{{ asset('manager/js/popper.min.js') }}"></script>
     <script src="{{ asset('manager/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('manager/js/jquery.matchHeight.min.js') }}"></script>
@@ -425,7 +426,6 @@
     <script src="{{ asset('manager/js/lib/data-table/buttons.colVis.min.js') }}"></script>
     <script src="{{ asset('manager/js/init/datatables-init.js') }}"></script>
     <script src="{{ asset('manager/js/lib/chosen/chosen.jquery.min.js') }}"></script>
-
     <script>
         jQuery(document).ready(function() {
             jQuery(".standardSelect").chosen({

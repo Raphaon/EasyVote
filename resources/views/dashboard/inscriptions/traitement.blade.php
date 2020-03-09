@@ -39,15 +39,6 @@
                             Date de Délivrance de la carte d'électeur <input type="date" name="date_deliv" class="form-control"
                             value="<?php if(!is_null(@$inscription->electeur->carteDeVote->dateDeliv)){ echo(date('Y-m-d', @$inscription->electeur->carteDeVote->dateDeliv)); } ?>" required min="<? date('Y-m-d', time()) ?>">
                         </div>
-                        {{-- <div class="col-4">
-                            Carte d'électeur disponible ?
-                            <select name="statut_cdv" class="form-control" required="">
-                                <option value="">...</option>
-                                <option value="0" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='0') selected @endif>Pas encore</option>
-                                <option value="2" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='2') selected @endif>Carte disponible</option>
-                                <option value="3" @if(!is_null($inscription->electeur->carteDeVote) && $inscription->electeur->carteDeVote->statutCarte=='3') selected @endif>Carte déjà retirée</option>
-                            </select>
-                        </div> --}}
                     </div>
                     <div class="row form-group">
                         <div class="col-6">

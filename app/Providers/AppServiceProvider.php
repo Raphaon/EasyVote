@@ -4,10 +4,12 @@ namespace App\Providers;
 
 
 use App;
-use Auth;
 use App\Constants;
-use Illuminate\Support\Facades\View;
+use Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Bon le validation ci est un peu spécial ...
+        Validator::extend('hashmatch', function($attribute, $value, $parameters){
+            $checkHash = Hash::check($value, Auth::user()[$parameters[0]]);
+
+            if(!$checkHash){
+                // Puis on enregistre le log ..
+                App\Log::create([
+                    'user_id' => Auth::user()->id,
+                    'action' => "MOT DE PASSE INCORRECT pour le compte de <strong>". ucwords(Auth::user()->name) ."(".Auth::user()->email.")</strong> LORS DE LA MISE À JOUR DES INFORMATIONS DU PROFILE.",
+                    'action_time' => time(),
+                    'level' => Constants::MANAGERLOGSLEVEL, // c-a-d c'est un gérant d'Elecam qui a éffectué l'action
+                ]);
+            }
+            return $checkHash;
+        });
+
         Schema::defaultStringLength(191);
 
         // Définition des variables que je veux rendre accessible dans des groupes de route

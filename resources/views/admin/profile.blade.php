@@ -1,4 +1,4 @@
-@extends('dashboard.partials.layout')
+@extends("admin.partials.layout")
 
 @section('content')
 <div class="content">
@@ -15,7 +15,7 @@
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title box-title">Mes informations</h4>
-						<form class="card-content" action="{{ route('dashboard.update_profile') }}" method="post">
+						<form class="card-content" action="{{ route('admin.update_profile') }}" method="post">
 							@csrf
 							<div class="row form-group">
 			                    <div class="col-12">
@@ -85,7 +85,7 @@
 				<div class="card">
 					<div class="card-body">
 						<h4 class="card-title box-title">Photo de profile</h4>
-						<form class="card-content" action="{{ route('dashboard.update_profileThumb') }}" method="post" enctype="multipart/form-data">
+						<form class="card-content" action="{{ route('admin.update_profileThumb') }}" method="post" enctype="multipart/form-data">
 							@csrf
 		                    <div class="row form-group m-4">
 		                        <div class="col-6 view_r">@if(!is_null($admin->getProfileAttribute())) <img src="{{ $admin->getProfileAttribute() }}" alt=""> @endif</div>

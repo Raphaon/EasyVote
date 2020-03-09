@@ -14,8 +14,9 @@
  ☐ compléter la navbar du côté dashboard et inclure les pages nécessaires
  ☐ compléter la navbar du côté super-admin et inclure les pages nécessaires
  ✔ CRUD des régions&departements&communes&bureaudevote (côté admin) @done (20-02-05 16:46)
- ☐ Gestion du profile d'un gérant d'ELECAM
+ ✔ Gestion du profile d'un gérant d'ELECAM @done (20-03-06 14:41)
+ ☐ Gestion du profile du super admin
  ✔ arranger la page de login @done (20-03-04 16:57)
  ✔ Cartes d'électeurs disponibles @done (20-03-05 13:55)
  ☐ Statistiques
- ☐ Dans les infos de valisation (serialize) ajouter region|departement|...
+ ☐ Dans les infos de validation (serialize) ajouter region|departement|...

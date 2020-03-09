@@ -30,6 +30,14 @@ Route::post('changer-statut-carte-de-vote', [
 	'uses' => "InscriptionsController@update_statutCarte",
 	'as' => "dashboard.inscription.update_statutCarte"
 ]);
+Route::post('mise-à-jour-profile', [
+	'uses' => "DashboardController@update_profile",
+	'as' => "dashboard.update_profile"
+]);
+Route::post('mise-à-jour-photo-de-profile', [
+	'uses' => "DashboardController@update_profile_thhumb",
+	'as' => "dashboard.update_profileThumb"
+]);
 
 
 // Groupe de routes pour la gestion des inscriptions

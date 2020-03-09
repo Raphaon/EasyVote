@@ -55,7 +55,7 @@
                         </ul>
                     </li>
                     <li><a href="{{ route('admin.logs') }}">Logs du système</a></li>
-                    <li><a href="#">Mon profil</a></li>
+                    <li><a href="{{ route('admin.profile') }}">Mon profil</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>

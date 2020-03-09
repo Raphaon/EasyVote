@@ -144,4 +144,6 @@ return [
 
     'attributes' => [],
 
+    'hashmatch' => "Your current password must match your account password.",
+
 ];

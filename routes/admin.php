@@ -18,6 +18,18 @@ Route::get('/logs-admin', [
 	'uses' => 'AdminController@logs',
 	'as' => "admin.logs",
 ]);
+Route::get('/mon-profile', [
+	'uses' => 'AdminController@profile',
+	'as' => "admin.profile",
+]);
+Route::post('mise-à-jour-profile', [
+	'uses' => "AdminController@update_profile",
+	'as' => "admin.update_profile"
+]);
+Route::post('mise-à-jour-photo-de-profile', [
+	'uses' => "AdminController@update_profile_thhumb",
+	'as' => "admin.update_profileThumb"
+]);
 
 
 // CRUD des régions
