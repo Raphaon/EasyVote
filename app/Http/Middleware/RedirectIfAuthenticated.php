@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Constants;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,12 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/admin');
+            if(auth()->user()->priority == Constants::MANAGERPRIORITY)
+                return redirect('/dashboard');
+            elseif(auth()->user()->priority == Constants::ADMINPRIORITY)
+                return redirect('/admin');
+            else
+                return redirect('/');
         }
 
         return $next($request);
